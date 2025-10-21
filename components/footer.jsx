@@ -1,0 +1,706 @@
+// "use client"
+// import { FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi"
+
+// export default function Footer() {
+//   return (
+//     <footer className="border-t">
+//       <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
+//         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+//           <div className="flex items-center gap-2">
+//             <div className="h-7 w-7 rounded-md bg-primary" aria-hidden />
+//             <span className="text-sm font-semibold">VersaNex</span>
+//           </div>
+//           <ul className="flex items-center gap-4 text-muted-foreground">
+//             <li>
+//               <a href="#" aria-label="Twitter">
+//                 <FiTwitter className="h-5 w-5" />
+//               </a>
+//             </li>
+//             <li>
+//               <a href="#" aria-label="Instagram">
+//                 <FiInstagram className="h-5 w-5" />
+//               </a>
+//             </li>
+//             <li>
+//               <a href="#" aria-label="LinkedIn">
+//                 <FiLinkedin className="h-5 w-5" />
+//               </a>
+//             </li>
+//           </ul>
+//           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} VersaNex. All rights reserved.</p>
+//         </div>
+//       </div>
+//     </footer>
+//   )
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client"
+// import { motion } from "framer-motion"
+// import { FiTwitter, FiInstagram, FiLinkedin, FiMail, FiMapPin, FiPhone } from "react-icons/fi"
+
+// export default function Footer() {
+//   return (
+//     <footer className="relative bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 mt-16">
+//       {/* Decorative top curve */}
+//       <div className="absolute -top-8 left-0 right-0 h-8 bg-gradient-to-r from-[#f2ad08]/20 to-transparent rounded-t-3xl blur-md"></div>
+
+//       <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+//         <div className="grid gap-10 md:grid-cols-3">
+//           {/* --- Column 1: Brand Info --- */}
+//           <div>
+//             <div className="flex items-center gap-2 mb-4">
+//               <div className="h-8 w-8 rounded-md bg-[#f2ad08]" />
+//               <span className="text-lg font-bold text-gray-900">VersaNex</span>
+//             </div>
+//             <p className="text-gray-600 leading-relaxed text-sm max-w-sm">
+//               Empowering businesses through innovation and technology — we craft digital experiences that deliver real results.
+//             </p>
+//             <div className="mt-5 space-y-2 text-sm text-gray-600">
+//               <p className="flex items-center gap-2">
+//                 <FiMail className="text-[#f2ad08]" /> hello@versanex.com
+//               </p>
+//               <p className="flex items-center gap-2">
+//                 <FiPhone className="text-[#f2ad08]" /> +92 333 1234567
+//               </p>
+//               <p className="flex items-center gap-2">
+//                 <FiMapPin className="text-[#f2ad08]" /> Faisalabad, Pakistan
+//               </p>
+//             </div>
+//           </div>
+
+//           {/* --- Column 2: Quick Links --- */}
+//           <div>
+//             <h4 className="text-lg font-semibold mb-4 text-gray-900">Quick Links</h4>
+//             <ul className="space-y-2 text-sm text-gray-600">
+//               <li><a href="#about" className="hover:text-[#f2ad08] transition-colors">About Us</a></li>
+//               <li><a href="#services" className="hover:text-[#f2ad08] transition-colors">Our Services</a></li>
+//               <li><a href="#projects" className="hover:text-[#f2ad08] transition-colors">Projects</a></li>
+//               <li><a href="#contact" className="hover:text-[#f2ad08] transition-colors">Contact</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Privacy Policy</a></li>
+//             </ul>
+//           </div>
+
+//           {/* --- Column 3: Socials --- */}
+//           <div>
+//             <h4 className="text-lg font-semibold mb-4 text-gray-900">Connect With Us</h4>
+//             <p className="text-sm text-gray-600 mb-4">Follow us for updates, insights, and more.</p>
+//             <div className="flex gap-4">
+//               {[
+//                 { icon: FiTwitter, link: "#", label: "Twitter" },
+//                 { icon: FiInstagram, link: "#", label: "Instagram" },
+//                 { icon: FiLinkedin, link: "#", label: "LinkedIn" },
+//               ].map(({ icon: Icon, link, label }, i) => (
+//                 <motion.a
+//                   key={label}
+//                   href={link}
+//                   aria-label={label}
+//                   whileHover={{ scale: 1.15, rotate: 5 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="w-10 h-10 rounded-full bg-[#f2ad08]/10 flex items-center justify-center text-[#f2ad08] hover:bg-[#f2ad08] hover:text-white transition-all"
+//                 >
+//                   <Icon className="w-5 h-5" />
+//                 </motion.a>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* --- Divider --- */}
+//         <div className="my-10 h-px bg-gray-200" />
+
+//         {/* --- Bottom Row --- */}
+//         <div className="flex flex-col md:flex-row items-center justify-between text-center gap-3">
+//           <p className="text-sm text-gray-500">
+//             © {new Date().getFullYear()} <span className="font-semibold text-gray-700">VersaNex</span>. All rights reserved.
+//           </p>
+//           <p className="text-sm text-gray-400">
+//             Crafted with ❤️ by <span className="text-[#f2ad08] font-medium">VersaNex Team</span>
+//           </p>
+//         </div>
+//       </div>
+
+//       {/* Subtle background decoration */}
+//       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#f2ad08]/10 rounded-full blur-3xl"></div>
+//     </footer>
+//   )
+// }
+
+
+
+
+
+
+
+
+
+
+// "use client"
+// import { motion } from "framer-motion"
+// import { FiTwitter, FiInstagram, FiLinkedin, FiMail, FiMapPin, FiPhone, FiArrowRight } from "react-icons/fi"
+// import Image from "next/image"
+// export default function Footer() {
+//   return (
+//     <footer className="relative bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-300 overflow-hidden">
+//       {/* Decorative gradient overlay */}
+//       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(242,173,8,0.1),transparent_60%)]" />
+
+//       <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-24">
+//         <div className="grid gap-12 md:grid-cols-4">
+//           {/* Column 1: Brand & Intro */}
+//           <div>
+//             <div className="flex items-center gap-2 mb-5">
+//               <Image src={"/logo.png"} height={50} alt="Logo" width={50}/>
+//               {/* <div className="h-9 w-9 rounded-md bg-[#f2ad08] shadow-lg" /> */}
+//               <span className="text-2xl font-bold text-white">VersaNex</span>
+//             </div>
+//             <p className="text-gray-400 leading-relaxed text-sm max-w-sm">
+//               We transform your digital presence with strategy, creativity, and engineering precision.
+//               Our mission is simple — build experiences that deliver measurable growth and user love.
+//             </p>
+
+//             <div className="mt-6 space-y-3 text-sm">
+//               <p className="flex items-center gap-2">
+//                 <FiMail className="text-[#f2ad08]" /> hello@versanex.com
+//               </p>
+//               <p className="flex items-center gap-2">
+//                 <FiPhone className="text-[#f2ad08]" /> +92 333 1234567
+//               </p>
+//               <p className="flex items-center gap-2">
+//                 <FiMapPin className="text-[#f2ad08]" /> Faisalabad, Pakistan
+//               </p>
+//             </div>
+//           </div>
+
+//           {/* Column 2: Company */}
+//           <div>
+//             <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
+//             <ul className="space-y-2 text-sm text-gray-400">
+//               <li><a href="#about" className="hover:text-[#f2ad08] transition-colors">About Us</a></li>
+//               <li><a href="#services" className="hover:text-[#f2ad08] transition-colors">Our Services</a></li>
+//               <li><a href="#projects" className="hover:text-[#f2ad08] transition-colors">Case Studies</a></li>
+//               <li><a href="#team" className="hover:text-[#f2ad08] transition-colors">Our Team</a></li>
+//               <li><a href="#contact" className="hover:text-[#f2ad08] transition-colors">Contact</a></li>
+//             </ul>
+//           </div>
+
+//           {/* Column 3: Resources */}
+//           <div>
+//             <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
+//             <ul className="space-y-2 text-sm text-gray-400">
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Blog & Insights</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">FAQs</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Careers</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Privacy Policy</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Terms of Use</a></li>
+//             </ul>
+//           </div>
+
+//           {/* Column 4: Newsletter & Socials */}
+//           <div>
+//             <h4 className="text-lg font-semibold text-white mb-4">Stay Updated</h4>
+//             <p className="text-gray-400 text-sm mb-4">
+//               Subscribe to our newsletter for exclusive updates, industry insights, and design inspiration.
+//             </p>
+//             <form className="flex items-center mb-6">
+//               <input
+//                 type="email"
+//                 required
+//                 placeholder="Enter your email"
+//                 className="w-full rounded-l-md bg-gray-800 text-gray-200 px-3 py-2 text-sm focus:outline-none"
+//               />
+//               <button
+//                 type="submit"
+//                 className="rounded-r-md bg-[#f2ad08] text-white px-3 py-2 flex items-center gap-1 hover:bg-[#e5a000] transition-colors"
+//               >
+//                 <FiArrowRight className="w-4 h-4" />
+//               </button>
+//             </form>
+
+//             <div className="flex gap-4">
+//               {[
+//                 { icon: FiTwitter, link: "#", label: "Twitter" },
+//                 { icon: FiInstagram, link: "#", label: "Instagram" },
+//                 { icon: FiLinkedin, link: "#", label: "LinkedIn" },
+//               ].map(({ icon: Icon, link, label }, i) => (
+//                 <motion.a
+//                   key={label}
+//                   href={link}
+//                   aria-label={label}
+//                   whileHover={{ scale: 1.15, y: -2 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-[#f2ad08] hover:bg-[#f2ad08] hover:text-black transition-all"
+//                 >
+//                   <Icon className="w-5 h-5" />
+//                 </motion.a>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Divider */}
+//         <div className="my-10 h-px bg-gray-800" />
+
+//         {/* Bottom Section */}
+//         <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+//           <p>
+//             © {new Date().getFullYear()} <span className="text-gray-300 font-semibold">VersaNex</span>. All rights reserved.
+//           </p>
+//           <p>
+//             Crafted with <span className="text-[#f2ad08]">❤️</span> by <span className="font-medium text-gray-300">VersaNex Studio</span>
+//           </p>
+//         </div>
+//       </div>
+
+//       {/* Decorative blur effects */}
+//       <div className="absolute bottom-0 left-0 w-60 h-60 bg-[#f2ad08]/10 rounded-full blur-3xl" />
+//       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#f2ad08]/10 rounded-full blur-3xl" />
+//     </footer>
+//   )
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { useState } from "react";
+// import { motion } from "framer-motion";
+// import { FiTwitter, FiInstagram, FiLinkedin, FiMail, FiMapPin, FiPhone, FiArrowRight } from "react-icons/fi";
+// import Image from "next/image";
+// import { toast } from "react-toastify"; // ✅ Import toast
+// import "react-toastify/dist/ReactToastify.css";
+
+// export default function Footer() {
+//   const [email, setEmail] = useState("");
+//   const [loading, setLoading] = useState(false);
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!email.trim()) return toast.error("Please enter your email");
+
+//     try {
+//       setLoading(true);
+//       const res = await fetch("/api/newsletter", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ email }),
+//       });
+
+//       const data = await res.json();
+
+//       if (res.ok) {
+//         toast.success("Subscribed successfully 🎉");
+//         setEmail("");
+//       } else {
+//         toast.error(data.message || "Subscription failed");
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       toast.error("Something went wrong. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <footer className="relative bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-300 overflow-hidden">
+//       {/* Decorative gradient overlay */}
+//       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(242,173,8,0.1),transparent_60%)]" />
+
+//       <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-24">
+//         <div className="grid gap-12 md:grid-cols-4">
+//           {/* Column 1: Brand & Intro */}
+//           <div>
+//             <div className="flex items-center gap-2 mb-5">
+//               <Image src={"/logo.png"} height={50} alt="Logo" width={50} />
+//               <span className="text-2xl font-bold text-white">VersaNex</span>
+//             </div>
+//             <p className="text-gray-400 leading-relaxed text-sm max-w-sm">
+//               We transform your digital presence with strategy, creativity, and engineering precision.
+//               Our mission is simple — build experiences that deliver measurable growth and user love.
+//             </p>
+
+//             <div className="mt-6 space-y-3 text-sm">
+//               <p className="flex items-center gap-2">
+//                 <FiMail className="text-[#f2ad08]" /> hello@versanex.com
+//               </p>
+//               <p className="flex items-center gap-2">
+//                 <FiPhone className="text-[#f2ad08]" /> +92 333 1234567
+//               </p>
+//               <p className="flex items-center gap-2">
+//                 <FiMapPin className="text-[#f2ad08]" /> Faisalabad, Pakistan
+//               </p>
+//             </div>
+//           </div>
+
+//           {/* Column 2: Company */}
+//           <div>
+//             <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
+//             <ul className="space-y-2 text-sm text-gray-400">
+//               <li><a href="#about" className="hover:text-[#f2ad08] transition-colors">About Us</a></li>
+//               <li><a href="#services" className="hover:text-[#f2ad08] transition-colors">Our Services</a></li>
+//               <li><a href="#projects" className="hover:text-[#f2ad08] transition-colors">Case Studies</a></li>
+//               <li><a href="#team" className="hover:text-[#f2ad08] transition-colors">Our Team</a></li>
+//               <li><a href="#contact" className="hover:text-[#f2ad08] transition-colors">Contact</a></li>
+//             </ul>
+//           </div>
+
+//           {/* Column 3: Resources */}
+//           <div>
+//             <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
+//             <ul className="space-y-2 text-sm text-gray-400">
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Blog & Insights</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">FAQs</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Careers</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Privacy Policy</a></li>
+//               <li><a href="#" className="hover:text-[#f2ad08] transition-colors">Terms of Use</a></li>
+//             </ul>
+//           </div>
+
+//           {/* Column 4: Newsletter & Socials */}
+//           <div>
+//             <h4 className="text-lg font-semibold text-white mb-4">Stay Updated</h4>
+//             <p className="text-gray-400 text-sm mb-4">
+//               Subscribe to our newsletter for exclusive updates, industry insights, and design inspiration.
+//             </p>
+
+//             {/* Newsletter form */}
+//             <form onSubmit={handleSubmit} className="flex items-center mb-6">
+//               <input
+//                 type="email"
+//                 required
+//                 placeholder="Enter your email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 className="w-full rounded-l-md bg-gray-800 text-gray-200 px-3 py-2 text-sm focus:outline-none"
+//               />
+//               <button
+//                 type="submit"
+//                 disabled={loading}
+//                 className="rounded-r-md bg-[#f2ad08] text-white px-3 py-2 flex items-center gap-1 hover:bg-[#e5a000] transition-colors disabled:opacity-50"
+//               >
+//                 {loading ? "..." : <FiArrowRight className="w-4 h-4" />}
+//               </button>
+//             </form>
+
+//             {/* Social icons */}
+//             <div className="flex gap-4">
+//               {[
+//                 { icon: FiTwitter, link: "#", label: "Twitter" },
+//                 { icon: FiInstagram, link: "#", label: "Instagram" },
+//                 { icon: FiLinkedin, link: "#", label: "LinkedIn" },
+//               ].map(({ icon: Icon, link, label }) => (
+//                 <motion.a
+//                   key={label}
+//                   href={link}
+//                   aria-label={label}
+//                   whileHover={{ scale: 1.15, y: -2 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-[#f2ad08] hover:bg-[#f2ad08] hover:text-black transition-all"
+//                 >
+//                   <Icon className="w-5 h-5" />
+//                 </motion.a>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Divider */}
+//         <div className="my-10 h-px bg-gray-800" />
+
+//         {/* Bottom Section */}
+//         <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+//           <p>
+//             © {new Date().getFullYear()} <span className="text-gray-300 font-semibold">VersaNex</span>. All rights reserved.
+//           </p>
+//           <p>
+//             Crafted with <span className="text-[#f2ad08]">❤️</span> by <span className="font-medium text-gray-300">VersaNex Studio</span>
+//           </p>
+//         </div>
+//       </div>
+
+//       {/* Decorative blur effects */}
+//       <div className="absolute bottom-0 left-0 w-60 h-60 bg-[#f2ad08]/10 rounded-full blur-3xl" />
+//       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#f2ad08]/10 rounded-full blur-3xl" />
+//     </footer>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
+import { useState, useCallback } from "react";
+import { motion } from "framer-motion";
+import { FiFacebook } from "react-icons/fi";
+import {
+  FiTwitter,
+  FiInstagram,
+  FiLinkedin,
+  FiMail,
+  FiMapPin,
+  FiPhone,
+  FiArrowRight,
+} from "react-icons/fi";
+import Image from "next/image";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!email.trim()) return toast.error("Please enter your email");
+
+      try {
+        setLoading(true);
+        const res = await fetch("/api/newsletter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          toast.success("Subscribed successfully 🎉");
+          setEmail("");
+        } else {
+          toast.error(data.message || "Subscription failed");
+        }
+      } catch {
+        toast.error("Something went wrong. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [email]
+  );
+
+  return (
+    <footer
+      className="relative bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-300 overflow-hidden"
+      role="contentinfo"
+    >
+      {/* Decorative overlay */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(242,173,8,0.1),transparent_60%)]"
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-24">
+        <div className="grid gap-12 md:grid-cols-4">
+          {/* 1️⃣ Brand & Intro */}
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <Image
+                src="/logo.png"
+                height={50}
+                width={50}
+                alt="VersaNex logo"
+                priority
+              />
+              <span className="text-2xl font-bold text-white">VersaNex</span>
+            </div>
+
+            <p className="text-gray-400 leading-relaxed text-sm max-w-sm">
+              We transform your digital presence with strategy, creativity, and
+              engineering precision. Our mission — build experiences that
+              deliver measurable growth and user love.
+            </p>
+
+            <address className="mt-6 not-italic space-y-3 text-sm">
+              <p className="flex items-center gap-2">
+                <FiMail className="text-[#f2ad08]" aria-hidden="true" />
+                <a
+                  href="mailto:support@versanex.site"
+                  className="hover:text-[#f2ad08]"
+                >
+                  support@versanex.site
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <FiPhone className="text-[#f2ad08]" aria-hidden="true" />
+                <a href="tel:+923331234567" className="hover:text-[#f2ad08]">
+                  +92 370 7140829
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <FiMapPin className="text-[#f2ad08]" aria-hidden="true" />
+                Faisalabad, Pakistan
+              </p>
+            </address>
+          </div>
+
+          {/* 2️⃣ Company */}
+          <nav aria-label="Company">
+            <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
+            <ul className="space-y-2 text-sm text-gray-400">
+              {[
+                ["/about", "About Us"],
+                ["/services", "Our Services"],
+                ["/portfolio", "Case Studies"],
+                ["/about/ourteam", "Our Team"],
+                ["/contact", "Contact"],
+              ].map(([link, text]) => (
+                <li key={text}>
+                  <a href={link} className="hover:text-[#f2ad08] transition-colors">
+                    {text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* 3️⃣ Resources */}
+          <nav aria-label="Resources">
+            <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
+            <ul className="space-y-2 text-sm text-gray-400">
+              {[
+                ["/faqs", "FAQs"],
+                ["/privacy-policy", "Privacy Policy"],
+                ["/terms-of-use", "Terms of Use"],
+              ].map(([link, text]) => (
+                <li key={text}>
+                  <a href={link} className="hover:text-[#f2ad08] transition-colors">
+                    {text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* 4️⃣ Newsletter */}
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-4">Stay Updated</h4>
+            <p className="text-gray-400 text-sm mb-4">
+              Subscribe to our newsletter for exclusive updates and insights.
+            </p>
+
+            <form
+              onSubmit={handleSubmit}
+              className="flex items-center mb-6"
+              aria-label="Newsletter Subscription Form"
+            >
+              <label htmlFor="email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-l-md bg-gray-800 text-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-[#f2ad08] focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="rounded-r-md bg-[#f2ad08] text-white px-3 py-2 flex items-center gap-1 hover:bg-[#e5a000] transition-colors disabled:opacity-50"
+                aria-label="Subscribe"
+              >
+                {loading ? (
+                  <span className="animate-pulse text-sm">...</span>
+                ) : (
+                  <FiArrowRight className="w-4 h-4" />
+                )}
+              </button>
+            </form>
+
+            {/* Social icons with animation */}
+            <div className="flex gap-4" aria-label="Social media links">
+              {[
+                { icon: FiFacebook, link: "https://www.facebook.com/versanexinc", label: "Twitter" },
+                { icon: FiInstagram, link: "https://www.instagram.com/versanexinc", label: "Instagram" },
+                { icon: FiLinkedin, link: "#", label: "LinkedIn" },
+              ].map(({ icon: Icon, link, label }) => (
+                <motion.a
+                  key={label}
+                  href={link}
+                  aria-label={label}
+                  whileHover={{ scale: 1.15, y: -2 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-[#f2ad08] hover:bg-[#f2ad08] hover:text-black transition-all"
+                >
+                  <Icon className="w-5 h-5" />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <hr className="my-10 border-gray-800" />
+
+        {/* Bottom section */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+          <p>
+            © {new Date().getFullYear()}{" "}
+            <span className="text-gray-300 font-semibold">VersaNex</span>. All
+            rights reserved.
+          </p>
+          <p>
+            Crafted with <span className="text-[#f2ad08]">❤️</span> by{" "}
+            <span className="font-medium text-gray-300">VersaNex Studio</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Decorative background blur */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 w-60 h-60 bg-[#f2ad08]/10 rounded-full blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 right-0 w-72 h-72 bg-[#f2ad08]/10 rounded-full blur-3xl"
+      />
+    </footer>
+  );
+}
