@@ -1,36 +1,3 @@
-// // api/projects/[id]/likes/route.js
-// import dbConnect from "@/lib/dbCon";
-// import Like from "@/lib/models/Like";
-// import Project from "@/lib/models/Project";
-
-// // POST handler (disabled for no login; return error. If you want anonymous likes, use IP as userId String)
-// export async function POST(request, { params }) {
-//   await dbConnect();
-
-//   const { id } = params; // No await needed, params is object in Next.js
-
-//   return new Response(
-//     JSON.stringify({ success: false, error: "Liking requires login, which is not available" }),
-//     { status: 400 }
-//   );
-// }
-
-// // DELETE handler (disabled for no login)
-// export async function DELETE(request, { params }) {
-//   await dbConnect();
-
-//   const { id } = params;
-
-//   return new Response(
-//     JSON.stringify({ success: false, error: "Unliking requires login, which is not available" }),
-//     { status: 400 }
-//   );
-// }
-
-
-
-
-
 
 
 import dbConnect from "@/lib/dbConnect";
