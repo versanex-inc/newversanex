@@ -1,3 +1,4 @@
+
 'use client'
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -83,7 +84,7 @@ export default function DynamicPopup() {
       {visible && (
         <motion.div
           key="popup-backdrop"
-          className="fixed inset-0 z-[9] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
