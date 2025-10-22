@@ -236,14 +236,13 @@ export default function Hero() {
                 We design and build products that people love to use.
               </h1>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                High-performance web, mobile, AI, and cloud solutions. Human-centered, conversion-focused, and engineered
-                for scale.
+               High-performance cloud, mobile, AI, and web applications. Conversion-focused, human-centered, and optimized for scale.
               </p>
 
               {/* Buttons */}
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <Link
-                  href="#contact"
+                  href="/contact"
                   className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition"
                   style={{ backgroundColor: "#f2ad08" }}
                 >
@@ -251,7 +250,7 @@ export default function Hero() {
                 </Link>
 
                 <a
-                  href="#work"
+                  href="/portfolio"
                   className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition"
                   style={{
                     borderColor: "#f2ad08",

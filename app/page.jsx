@@ -63,8 +63,8 @@ export default function HomePage() {
       <Navbar />
       <main id="main" className="flex flex-col">
         <Hero />
-        <Services />
         <About />
+        <Services />
         <Portfolio />
         <Advantages />
         <Testimonials />

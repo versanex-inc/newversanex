@@ -1329,7 +1329,7 @@ const teamMembers = [
     position: "Founder",
     role: "WEB DEVELOPMENT",
     bio: "Leading our development team with a vision for innovation and quality-driven solutions.",
-    linkedin: "https://www.linkedin.com/in/fahad-joyia/",
+    linkedin: "https://www.linkedin.com/in/muhammad-fahad-shakeel-69569a371/",
     email: "fahad.joyia@example.com",
   },
   {
@@ -1338,8 +1338,8 @@ const teamMembers = [
     position: "Graphic Designer",
     role: "GRAPHICS DESIGN",
     bio: "Crafting visual identities that connect brands and audiences through creativity.",
-    linkedin: "https://www.linkedin.com/in/hisham-hussain/",
-    email: "hisham.hussain@example.com",
+    linkedin: "https://www.linkedin.com/in/jamispeaks",
+    email: "jamispeaks.contact@gmail.com",
   },
   {
     img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759944545/image-4096x4096_3_bmva0b.png",
@@ -1359,34 +1359,72 @@ const teamMembers = [
     linkedin: "https://www.linkedin.com/in/taha-khurram/",
     email: "taha.khurram@example.com",
   },
-  {
-    img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759946290/image-4096x4096_4_v1in8h.png",
-    name: "Muneeb Naqvi",
-    position: "Content Writer",
-    role: "CONTENT WRITING",
-    bio: "Creating powerful narratives and SEO-optimized content that inspires engagement.",
-    linkedin: "https://www.linkedin.com/in/muneeb-naqvi/",
-    email: "muneeb.naqvi@example.com",
-  },
+ {
+  img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759946290/image-4096x4096_4_v1in8h.png",
+  name: "Muneeb Naqvi",
+  position: "Web Developer",
+  role: "WEB DEVELOPMENT",
+  bio: "Skilled in building responsive and user-friendly websites with clean, modern design.",
+  linkedin: "https://www.linkedin.com/in/muneeb-naqvi/",
+  email: "muneeb.naqvi@example.com",
+},
+{
+  img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1761165512/image-4096x4096_6_sztewo.png",
+  name: "Moaz Ahmad",
+  position: "Web Developer",
+  role: "WEB DEVELOPMENT",
+  bio: "Focused on creating dynamic, efficient, and visually engaging web solutions.",
+  linkedin: "https://www.linkedin.com/in/taha-khurram/",
+  email: "taha.khurram@example.com",
+},
+{
+  img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1760028740/image-4096x4096_5_qhuyfu.png",
+  name: "Muhammad Ahmad",
+  position: "Content Writer",
+  role: "CONTENT WRITER",
+  bio: "Creates engaging and SEO-friendly content that connects with audiences.",
+  linkedin: "https://www.linkedin.com/in/ahmad-rajpootttt/",
+  email: "Cwriter448@gmail.com",
+},
+
 ];
+
+// const quotes = [
+//   {
+//     quote: "At Versanex, innovation and collaboration fuel every project we build.",
+//     name: "Moaz",
+//     position: "Founder",
+//   },
+//   {
+//     quote: "Success comes from teamwork, dedication, and the passion to create impact.",
+//     name: "Hisham",
+//     position: "Co-Founder",
+//   },
+//   {
+//     quote: "We build technology not just for today — but for the digital future.",
+//     name: "Fahad",
+//     position: "Co-Founder",
+//   },
+// ];
 
 const quotes = [
   {
-    quote: "At Versanex, innovation and collaboration fuel every project we build.",
-    name: "Moaz",
+    quote: "We build technology not just for today — but for the digital future.",
+    name: "Fahad",
     position: "Founder",
   },
   {
-    quote: "Success comes from teamwork, dedication, and the passion to create impact.",
-    name: "Hisham",
-    position: "Co-Founder",
+    quote: "Code with creativity — turning ideas into seamless digital experiences.",
+    name: "Moaz",
+    position: "Web Developer",
   },
   {
-    quote: "We build technology not just for today — but for the digital future.",
-    name: "Fahad",
-    position: "Co-Founder",
+    quote: "Design is the silent ambassador of your brand — I bring that vision to life.",
+    name: "Hisham",
+    position: "Graphic Designer",
   },
 ];
+
 
 // ✅ Optimized memoized team card
 const TeamCard = memo(({ member, index }) => (
@@ -1522,7 +1560,7 @@ export default function TeamPage() {
       </section>
 
       {/* Join Us Section */}
-      <section className="py-20 px-6 max-w-5xl mx-auto text-center">
+      {/* <section className="py-20 px-6 max-w-5xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Become a <span className="text-amber-500">Team Member</span>
         </h2>
@@ -1565,7 +1603,26 @@ export default function TeamPage() {
             </button>
           </form>
         )}
-      </section>
+      </section> */}
+
+      <section className="py-20 px-6 max-w-5xl mx-auto text-center">
+  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+    <span className="text-amber-500">Contact</span> Us
+  </h2>
+  <div className="h-1 w-20 bg-amber-500 mx-auto mb-6 rounded-full" />
+  <p className="text-gray-600 max-w-2xl mx-auto mb-8 text-lg">
+    Have a project in mind or want to collaborate? We’d love to hear from you!
+    Reach out to discuss your ideas and let's build something amazing together.
+  </p>
+
+  <button
+    onClick={() => (window.location.href = "/contact")}
+    className="px-8 py-3 bg-amber-500 text-white rounded-lg font-medium hover:bg-amber-600 transition-all duration-300"
+  >
+    Contact Us
+  </button>
+</section>
+
 
       <Footer />
     </>

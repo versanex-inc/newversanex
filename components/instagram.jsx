@@ -288,9 +288,9 @@ export default function InstagramSection() {
               Engaging Stories, Crafted to Capture Attention
             </h2>
             <p className="mt-3 text-gray-600 text-base md:text-lg leading-relaxed">
-              Discover short, high-impact reels designed to engage and convert.
-              Every clip blends creativity, emotion, and storytelling — perfectly optimized
-              for performance and virality.
+            Learn about short, powerful reels that are meant to captivate and convert.
+            Every clip is carefully designed for performance and virality, combining storytelling, emotion, and inventiveness.
+
             </p>
           </div>
 
