@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { Inter } from "next/font/google"
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import WhatsappButton from '@/components/WhatsappButton'
+import CookieBaner from '@/components/CookieBanner'
 const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "VersaNex — Software House | Web, Mobile, AI & Cloud Solutions",
@@ -75,6 +76,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
+        <CookieBaner/>
         <WhatsappButton/>
         <Analytics />
       </body>
