@@ -4,12 +4,18 @@ import { FaPlus, FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 import { gsap } from 'gsap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { createPortal } from 'react-dom';
 const ProjectsSection = ({ getStatusColor }) => {
   const [projects, setProjects] = useState([]);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [isMounted, setIsMounted] = useState(false);
+
+useEffect(() => {
+  setIsMounted(true);
+}, []);
 
   useEffect(() => {
     fetchProjects();
@@ -725,15 +731,16 @@ const ProjectsSection = ({ getStatusColor }) => {
         </div>
       )}
 
-      {showProjectModal && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => {
-            setShowProjectModal(false);
-            setSelectedProject(null);
-          }}
-        />
-      )}
+{showProjectModal && isMounted && createPortal(
+  <ProjectModal
+    project={selectedProject}
+    onClose={() => {
+      setShowProjectModal(false);
+      setSelectedProject(null);
+    }}
+  />,
+  document.body
+)}
     </div>
   );
 };
