@@ -248,7 +248,13 @@ export default function Navbar() {
               priority
             />
             <span className="lg:text-3xl text-2xl font-extrabold tracking-tight text-gray-900 transition-colors duration-300">
-              VersaNex
+              {/* VersaNex */}
+              <Image
+              src={"/brandname.png"}
+              height={140}
+              width={140}
+              alt="Brand Name"
+              />
             </span>
           </Link>
 
