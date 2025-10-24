@@ -524,7 +524,7 @@ export default function CookieBanner() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[2147483646] bg-white rounded-2xl shadow-2xl p-6 max-w-6xl w-[90%]"
+              className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[2147483646] bg-white rounded-t-2xl rounded-b-none shadow-2xl p-6 max-w-6xl w-[90%]"
             >
               <p className="text-gray-700 text-base mb-6">
                 We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking &apos;Accept All&apos;, you consent to our use of cookies. <a href="/privacy-policy" className="text-[#f2ad08] hover:underline">Read our Privacy Policy</a> for more information.
@@ -555,7 +555,7 @@ export default function CookieBanner() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-black/30 backdrop-blur-sm"
+            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-black/30 backdrop-blur-[2px]"
             onClick={() => setShowModal(false)}
           >
             <motion.div

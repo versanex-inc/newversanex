@@ -37,7 +37,7 @@ export default function ProjectHeader({ project, averageRating, reviews }) {
 
         <div className="absolute bottom-0 left-0 p-3 sm:p-4 md:p-6 text-white">
           {/* Creator Info */}
-          <div className="pd-card flex items-start gap-4 mb-4">
+          {/* <div className="pd-card flex items-start gap-4 mb-4">
             <div
               className="relative size-12 sm:size-16 rounded-full overflow-hidden border"
               style={{
@@ -75,7 +75,7 @@ export default function ProjectHeader({ project, averageRating, reviews }) {
               </a>
               <div className="text-xs sm:text-sm text-white/70">{project.creatorNiche}</div>
             </div>
-          </div>
+          </div> */}
 
           {/* Category Badge */}
           <div className="flex items-center gap-1.5 mb-1 sm:mb-2">
