@@ -251,8 +251,8 @@ export default function Navbar() {
               {/* VersaNex */}
               <Image
               src={"/brandname.png"}
-              height={140}
-              width={140}
+              height={130}
+              width={130}
               alt="Brand Name"
               />
             </span>
@@ -277,10 +277,10 @@ export default function Navbar() {
 
             <div className="relative">
               <Link
-                href="/portfolio"
+                href="/projects"
                 className="px-4 py-2 text-gray-700 hover:text-[#f2ad08] font-semibold text-sm rounded-full transition-all duration-300 hover:bg-[#f2ad08]/10 relative flex items-center"
               >
-                Portfolio
+                Projects
                 <motion.div
                   className="absolute bottom-0 left-0 h-0.5 bg-[#f2ad08]"
                   variants={underlineVariants}
@@ -507,11 +507,11 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/portfolio"
+                    href="/projects"
                     onClick={handleMobileClose}
                     className="block p-4 rounded-xl hover:bg-[#f2ad08]/10 transition-all duration-300"
                   >
-                    <span className="font-semibold text-gray-900">Portfolio</span>
+                    <span className="font-semibold text-gray-900">Projects</span>
                   </Link>
 
                   <div>
