@@ -77,10 +77,10 @@ export async function PUT(req, { params }) {
       data.liveLink = form.get("liveLink");
       data.repoLink = form.get("repoLink");
 
-      data.creatorName = form.get("creatorName");
-      data.creatorNiche = form.get("creatorNiche");
-      data.creatorProfile = form.get("creatorProfile");
-      data.creatorPicture = form.get("creatorPicture");
+      // data.creatorName = form.get("creatorName");
+      // data.creatorNiche = form.get("creatorNiche");
+      // data.creatorProfile = form.get("creatorProfile");
+      // data.creatorPicture = form.get("creatorPicture");
 
       data.deadline = form.get("deadline")
         ? new Date(form.get("deadline"))
