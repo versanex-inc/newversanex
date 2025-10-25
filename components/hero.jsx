@@ -39,7 +39,7 @@ export default function Hero() {
                 </Link>
 
                 <a
-                  href="/portfolio"
+                  href="/projects"
                   className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition"
                   style={{
                     borderColor: "#f2ad08",
@@ -53,7 +53,7 @@ export default function Hero() {
                     e.currentTarget.style.backgroundColor = "transparent"
                   }}
                 >
-                  View Portfolio
+                  View Projects
                 </a>
               </div>
 

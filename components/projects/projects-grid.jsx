@@ -284,7 +284,7 @@ export default function ProjectsGrid({ category }) {
               {/* 🔗 Links + Status */}
               <div className="flex items-center justify-between">
                 <Link
-                  href={`/portfolio/${project.slug}`}
+                  href={`/projects/${project.slug}`}
                   className="flex items-center text-sm font-medium transition-colors duration-300"
                   style={{
                     color: "#d88f07",
