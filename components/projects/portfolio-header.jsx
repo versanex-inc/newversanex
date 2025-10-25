@@ -260,7 +260,7 @@ export default function PortfolioHeader({ onFilterChange }) {
 
   const categories = [
   { key: "All", label: "All" },
-  { key: "graphics-designing", label: "Graphics Design" },
+  { key: "graphic-designing", label: "Graphics Design" },
   { key: "website-developing", label: "Web Development" },
   { key: "video-editing", label: "Video Editing" },
   { key: "ui-ux", label: "UI / UX" },
