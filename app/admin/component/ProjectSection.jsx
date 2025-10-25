@@ -967,7 +967,7 @@ useEffect(() => {
                   className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
                   <option value="website-developing">Website Development</option>
-                  <option value="graphics-designing">Graphics Designing</option>
+                  <option value="graphic-designing">Graphics Designing</option>
                   <option value="video-editing">Video Editing</option>
                   <option value="content-writing">Content Writing</option>
                   <option value="digital-marketing">Digital Marketing</option>
