@@ -30,9 +30,9 @@ export default function OverviewTab({ project, fadeIn, staggerContainer, motion 
           </div>
 
           <div className="flex flex-wrap gap-2 sm:gap-3">
-            {project.creatorProfile && (
+            {project.liveLink && (
               <Link
-                href={project.creatorProfile}
+                href={project.liveLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg 
