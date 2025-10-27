@@ -9,62 +9,78 @@ import WhatsappButton from '@/components/WhatsappButton'
 import CookieBaner from '@/components/CookieBanner'
 const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
-  title: "VersaNex — Software House | Web, Mobile, AI & Cloud Solutions",
+  title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
   description:
-    "VersaNex is a full-service software house delivering modern web, mobile, AI, and cloud solutions. We build fast, scalable products with a human-centered approach.",
-  generator: "v0.app",
+    "VersaNex is a full-service software house providing website development, mobile apps, graphic designing, video editing, digital marketing, content writing, and software quality assurance. We create fast, scalable, and visually engaging digital experiences.",
   keywords: [
     "VersaNex",
     "software house",
     "web development",
     "mobile apps",
-    "AI",
-    "cloud",
+    "graphic designing",
+    "video editing",
+    "digital marketing",
+    "content writing",
+    "software quality assurance",
     "Next.js",
+    "React",
     "Tailwind CSS",
     "Framer Motion",
+    "Pakistan software company",
+    "IT solutions",
+    "custom web applications"
   ],
+
   icons: {
     icon: [
-      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico" },
     ],
     apple: [
-      { url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
     other: [
       {
         rel: "manifest",
-        url: "/favicon/site.webmanifest",
+        url: "/site.webmanifest",
       },
       {
         rel: "android-chrome",
-        url: "/favicon/android-chrome-192x192.png",
+        url: "/android-chrome-192x192.png",
         sizes: "192x192",
       },
       {
         rel: "android-chrome",
-        url: "/favicon/android-chrome-512x512.png",
+        url: "/android-chrome-512x512.png",
         sizes: "512x512",
       },
     ],
   },
-  openGraph: {
-    title: "VersaNex — Software House",
+openGraph: {
+    title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
     description:
-      "We craft high-performance digital products: Web, Mobile, AI & Cloud.",
-    url: "https://VersaNex.example", // replace when live
+      "We craft high-performance digital solutions — from websites and mobile apps to design, content, and marketing. Fast, scalable, and human-centered.",
+    url: "https://www.versanex.site/",
     siteName: "VersaNex",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "https://www.versanex.site/og-image.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "VersaNex — Software House",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "VersaNex — Software House",
+    title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
     description:
-      "Modern Web, Mobile, AI & Cloud solutions. Fast. Scalable. Human-centered.",
-    creator: "@VersaNex", // update if available
+      "Modern website, mobile app, and digital services — including design, marketing, and quality assurance — crafted by VersaNex.",
+    creator: "@VersaNex",
+    images: ["https://www.versanex.site/og-image.jpeg"],
   },
 };
 
