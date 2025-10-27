@@ -9,21 +9,22 @@ export default function GoogleAnalytics() {
   useEffect(() => {
     if (!window.gtag) return;
 
-    window.gtag("config", "G-Z4MVVGH6E7", {
+    window.gtag("config", "G-YG41JNTWD3", {
       page_path: pathname,
     });
   }, [pathname]);
 
   return (
     <>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4MVVGH6E7"></script>
+      {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4MVVGH6E7"></script> */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-YG41JNTWD3"></script>
       <script
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-Z4MVVGH6E7');
+            gtag('config', 'G-YG41JNTWD3');
           `,
         }}
       />
