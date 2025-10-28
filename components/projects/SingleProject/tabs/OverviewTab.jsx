@@ -1,16 +1,47 @@
-
-
-// components/projects/SingleProject/tabs/OverviewTab.jsx
+"use client"
+import { useEffect, useState } from "react"
 import { Calendar, Clock, Users, Tag, ExternalLink, Github } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
-export default function OverviewTab({ project, fadeIn, staggerContainer, motion }) {
+export default function OverviewTab({ project, fadeIn, staggerContainer }) {
+  const [views, setViews] = useState(project.views || 0)
+
+  // 📌 Record a view instantly when the page loads
+  useEffect(() => {
+    if (!project?._id) return
+
+    const recordView = async () => {
+      try {
+        const res = await fetch("/api/views", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ projectId: project._id }),
+        })
+        const data = await res.json()
+        if (res.ok && data.success) {
+          // instantly update total views in UI
+          setViews(data.totalViews || views + 1)
+        } else {
+          console.error("Failed to record view:", data.error)
+        }
+      } catch (error) {
+        console.error("Error adding view:", error)
+      }
+    }
+
+    recordView()
+  }, [project?._id])
+
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="visible">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <motion.div variants={fadeIn} className="md:col-span-2">
-          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-800">Project Overview</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-800">
+            Project Overview
+          </h2>
           <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6">
             {project.description || "No description available"}
           </p>
@@ -64,14 +95,18 @@ export default function OverviewTab({ project, fadeIn, staggerContainer, motion 
           className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 
           rounded-xl p-4 sm:p-6 border border-amber-100"
         >
-          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">Project Details</h3>
+          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+            Project Details
+          </h3>
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-start gap-2 sm:gap-3">
               <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 mt-0.5" />
               <div>
                 <p className="font-medium text-gray-700 text-sm sm:text-base">Updated on</p>
                 <p className="text-gray-600 text-xs sm:text-sm">
-                  {project.deadline ? new Date(project.deadline).toLocaleDateString() : "N/A"}
+                  {project.deadline
+                    ? new Date(project.deadline).toLocaleDateString()
+                    : "N/A"}
                 </p>
               </div>
             </div>
@@ -80,7 +115,9 @@ export default function OverviewTab({ project, fadeIn, staggerContainer, motion 
               <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 mt-0.5" />
               <div>
                 <p className="font-medium text-gray-700 text-sm sm:text-base">Status</p>
-                <p className="text-gray-600 text-xs sm:text-sm">{project.status || "N/A"}</p>
+                <p className="text-gray-600 text-xs sm:text-sm">
+                  {project.status || "N/A"}
+                </p>
               </div>
             </div>
 
@@ -88,7 +125,7 @@ export default function OverviewTab({ project, fadeIn, staggerContainer, motion 
               <Users className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 mt-0.5" />
               <div>
                 <p className="font-medium text-gray-700 text-sm sm:text-base">Views</p>
-                <p className="text-gray-600 text-xs sm:text-sm">{project.views || 0}</p>
+                <p className="text-gray-600 text-xs sm:text-sm">{views}</p>
               </div>
             </div>
           </div>
@@ -96,7 +133,9 @@ export default function OverviewTab({ project, fadeIn, staggerContainer, motion 
       </div>
 
       <motion.div variants={fadeIn}>
-        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">Key Features</h3>
+        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800">
+          Key Features
+        </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {(project.features || []).slice(0, 4).map((feature, index) => (
             <div
@@ -105,9 +144,11 @@ export default function OverviewTab({ project, fadeIn, staggerContainer, motion 
               border border-amber-100 rounded-lg p-3 sm:p-4 flex items-start gap-2 sm:gap-3 
               hover:shadow-md hover:border-amber-300 transition-all"
             >
-              <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full 
+              <div
+                className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full 
               bg-gradient-to-tr from-amber-500 to-orange-400 
-              flex items-center justify-center text-white text-xs sm:text-sm shadow-sm">
+              flex items-center justify-center text-white text-xs sm:text-sm shadow-sm"
+              >
                 {index + 1}
               </div>
               <p className="text-gray-700 text-sm sm:text-base">{feature}</p>

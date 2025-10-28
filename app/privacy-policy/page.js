@@ -71,17 +71,22 @@ const privacyData = [
       "Our services are not directed to children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected information from a child under 13, we will take steps to delete such information promptly.",
   },
   {
-    title: "9. International Data Transfers",
+    title: "9. Views and Reviews",
+    content:
+      "Some of the views, ratings, or reviews displayed on this website are automatically generated or simulated for demonstration purposes. They do not necessarily represent real user feedback.",
+  },
+  {
+    title: "10. International Data Transfers",
     content:
       "Your information may be transferred to, stored in, and processed in countries other than your country of residence. These countries may have data protection laws that differ from your home country. By using our services, you consent to the transfer of your information to countries outside your country of residence.",
   },
   {
-    title: "10. Changes to This Policy",
+    title: "11. Changes to This Policy",
     content:
       'We may update this privacy policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the updated policy on our website and updating the "Last Updated" date. Your continued use of our services constitutes acceptance of the updated policy.',
   },
   {
-    title: "11. Contact Us",
+    title: "12. Contact Us",
     content:
       "If you have questions about this privacy policy or our privacy practices, please contact us at privacy@versanex.com or through our contact form. We will respond to your inquiry within 30 days. You can also reach out to our Data Protection Officer for privacy-related concerns.",
   },
