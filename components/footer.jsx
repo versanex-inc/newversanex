@@ -96,8 +96,8 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <FiPhone className="text-[#f2ad08]" aria-hidden="true" />
-                <a href="tel:+923331234567" className="hover:text-[#f2ad08]">
-                  +92 370 7140829
+                <a href="tel:+92345 7707337" className="hover:text-[#f2ad08]">
+                  +92 345 7707337
                 </a>
               </p>
               <p className="flex items-center gap-2">

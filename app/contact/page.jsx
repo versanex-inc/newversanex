@@ -247,8 +247,8 @@ export default function ContactUs() {
                     {
                       icon: <FiPhone className="h-6 w-6 text-[#f2ad08]" />,
                       title: "Phone",
-                      text: "+92 370 7140829",
-                      link: "+923707140829",
+                      text: "+92 345 7707337",
+                      link: "+923457707337",
                     },
                     {
                       icon: <FiMail className="h-6 w-6 text-[#f2ad08]" />,
