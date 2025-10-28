@@ -74,6 +74,36 @@ export default function ProjectDetailPage() {
     return () => ctx.revert();
   }, []);
 
+// ✅ Track Views (IP + Cookie + LocalStorage protected)
+useEffect(() => {
+  if (!project?._id) return;
+
+  const viewedKey = `viewed_${project._id}`;
+
+  // 🧠 Check localStorage to prevent re-count from same browser
+  if (typeof window !== "undefined" && localStorage.getItem(viewedKey)) return;
+
+  const trackView = async () => {
+    try {
+      const res = await fetch("/api/views", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: project._id }),
+      });
+      const data = await res.json();
+      console.log("View Tracked:", data);
+      if (data.counted) {
+        localStorage.setItem(viewedKey, "true");
+      }
+    } catch (err) {
+      console.error("Error tracking view:", err);
+    }
+  };
+
+  trackView();
+}, [project?._id]);
+
+
   useEffect(() => {
     const fetchProject = async () => {
       setLoading(true);
@@ -130,20 +160,6 @@ export default function ProjectDetailPage() {
 
   if (loading) {
     return (
-      // <div
-      //   className="min-h-screen flex items-center justify-center"
-      //   style={{
-      //     background: "linear-gradient(135deg, #f5e2b8, #f9f0d0, #fffaf2)",
-      //   }}
-      // >
-      //   <div
-      //     className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2"
-      //     style={{
-      //       borderColor: "#d88f07",
-      //       boxShadow: "0 0 10px rgba(216, 143, 7, 0.3)",
-      //     }}
-      //   ></div>
-      // </div>
       <>
       <LoadingAnimation/>
       </>

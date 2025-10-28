@@ -8,6 +8,7 @@ import ProjectsSection from './component/ProjectSection';
 import ContactsSection from './component/ContactSection';
 import ReviewSection from './component/ReviewSecion';
 import PopUps from './component/PopUps';
+import ViewManager from './component/viewmanager';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -139,6 +140,15 @@ const AdminPanel = () => {
             <FaEnvelope className="mr-2 text-lg" /> PopUps
           </button>
           <button
+            className={`flex items-center px-4 py-3 sm:py-4 font-medium text-sm sm:text-base transition-colors ${activeTab === 'ViewManager'
+              ? 'border-b-2 border-amber-500 text-amber-600'
+              : 'text-gray-600 hover:text-amber-600'
+              }`}
+            onClick={() => setActiveTab('ViewManager')}
+          >
+            <FaEnvelope className="mr-2 text-lg" /> Views Managment
+          </button>
+          <button
             className={`flex items-center px-4 py-3 sm:py-4 font-medium text-sm sm:text-base transition-colors ${activeTab === 'reviews'
               ? 'border-b-2 border-amber-500 text-amber-600'
               : 'text-gray-600 hover:text-amber-600'
@@ -200,6 +210,7 @@ const AdminPanel = () => {
           )}
           {activeTab === 'reviews' && <ReviewSection />}
           {activeTab === 'Popup' && <PopUps />}
+          {activeTab === 'ViewManager' && <ViewManager />}
         </div>
       </div>
     </div>
