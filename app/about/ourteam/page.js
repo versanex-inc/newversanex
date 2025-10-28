@@ -101,7 +101,7 @@ const quotes = [
   {
     quote: "We build technology not just for today — but for the digital future.",
     name: "Fahad",
-    position: "Founder",
+    position: "Web Developer",
   },
   {
     quote: "Code with creativity — turning ideas into seamless digital experiences.",

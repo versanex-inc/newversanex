@@ -12,7 +12,7 @@ import { FiArrowRight } from "react-icons/fi"
 const team = [
   {
     name: "Fahad Joyia",
-    role: "Founder / Web Developer",
+    role: "Web Developer",
     img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759932169/image-4096x4096_axfq0s.png",
     linkedin: "https://www.linkedin.com/in/muhammad-fahad-shakeel-69569a371/",
     email: "fahad.shakeel.dev@gmail.com",
