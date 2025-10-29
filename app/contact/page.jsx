@@ -286,7 +286,7 @@ export default function ContactUs() {
               {/* Image Section */}
               <div className="relative rounded-3xl overflow-hidden shadow-xl">
                 <Image
-                  src="/contact-image.jpg"
+                  src="https://res.cloudinary.com/dbbbve4y4/image/upload/v1761777638/WhatsApp_Image_2025-10-22_at_08.18.36_c8bf8d8e_bc0n1k.jpg"
                   width={600}
                   height={400}
                   alt="Contact Us"

@@ -5,14 +5,14 @@ import { FaWhatsapp } from "react-icons/fa";
 import { useState } from "react";
 
 export default function WhatsappButton() {
-  const phoneNumber = "+923707140829"; // include country code, e.g., "1234567890"
+  const phoneNumber = "+923457707337";
   const message = "Hello! I'd like to inquire about your services.";
 
   const [hovered, setHovered] = useState(false);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
-      {/* Tooltip */}
+    
       <span
         className={`bg-gray-800 text-white text-sm font-medium px-3 py-1.5 rounded-md shadow-md transition-all duration-300 ease-in-out ${
           hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2"

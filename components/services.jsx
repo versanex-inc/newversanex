@@ -21,13 +21,13 @@ const services = [
     icon: FiCode,
     title: "Web Development",
     desc: "Modern, high-performance websites built with Next.js and React for optimal SEO, speed, and scalability.",
-    slug: "web-development",
+    slug: "web-apps",
   },
   {
     icon: FiLayout,
     title: "WordPress Development",
     desc: "Custom WordPress themes, plugins, and CMS-driven sites optimized for usability and Google Core Web Vitals.",
-    slug: "wordpress-development",
+    slug: "wordpress-websites",
   },
   {
     icon: FiVideo,
