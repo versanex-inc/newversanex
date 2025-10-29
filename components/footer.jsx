@@ -216,8 +216,7 @@ export default function Footer() {
             rights reserved.
           </p>
           <p>
-            Crafted with <span className="text-[#f2ad08]">❤️</span> by{" "}
-            <span className="font-medium text-gray-300">VersaNex Studio</span>
+            <span className="font-medium text-gray-300">VersaNex</span>
           </p>
         </div>
       </div>
