@@ -33,21 +33,21 @@ const teamMembers = [
   },
   {
     img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759944545/image-4096x4096_3_bmva0b.png",
-    name: "Hamiz Asghat",
+    name: "Hamiz Asghar",
     position: "Full Stack Developer",
     role: "WEB DEVELOPMENT",
     bio: "Building robust and scalable web systems with a focus on performance and UX.",
-    linkedin: "https://www.linkedin.com/in/hamiz-asghat/",
-    email: "hamiz.asghat@example.com",
+    linkedin: "https://www.linkedin.com/in/hamiz-asghar-349915320",
+    email: "hamizasghar@gmail.com",
   },
   {
     img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759943688/image-4096x4096_2_abeh5p.png",
     name: "Taha Khurram",
-    position: "Digital Marketer",
-    role: "DIGITAL MARKETING",
-    bio: "Driving growth through strategic campaigns and data-driven marketing efforts.",
-    linkedin: "https://www.linkedin.com/in/taha-khurram/",
-    email: "taha.khurram@example.com",
+    position: "Quality Assurance",
+    role: "Quality Assurance",
+    bio: "Driving growth through strategic campaigns and data-driven efforts.",
+    linkedin: "",
+    email: "",
   },
  {
   img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759946290/image-4096x4096_4_v1in8h.png",
@@ -55,14 +55,14 @@ const teamMembers = [
   position: "Web Developer",
   role: "WEB DEVELOPMENT",
   bio: "Skilled in building responsive and user-friendly websites with clean, modern design.",
-  linkedin: "https://www.linkedin.com/in/muneeb-naqvi/",
-  email: "muneeb.naqvi@example.com",
+  linkedin: "",
+  email: "",
 },
 {
   img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1761165512/image-4096x4096_6_sztewo.png",
   name: "Moaz Ahmad",
-  position: "Web Developer",
-  role: "WEB DEVELOPMENT",
+  position: "Digital Marketer",
+  role: "Digital Marketer",
   bio: "Focused on creating dynamic, efficient, and visually engaging web solutions.",
   linkedin: "https://www.linkedin.com/in/taha-khurram/",
   email: "taha.khurram@example.com",
@@ -78,24 +78,6 @@ const teamMembers = [
 },
 
 ];
-
-// const quotes = [
-//   {
-//     quote: "At Versanex, innovation and collaboration fuel every project we build.",
-//     name: "Moaz",
-//     position: "Founder",
-//   },
-//   {
-//     quote: "Success comes from teamwork, dedication, and the passion to create impact.",
-//     name: "Hisham",
-//     position: "Co-Founder",
-//   },
-//   {
-//     quote: "We build technology not just for today — but for the digital future.",
-//     name: "Fahad",
-//     position: "Co-Founder",
-//   },
-// ];
 
 const quotes = [
   {
