@@ -5,6 +5,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import { Inter } from "next/font/google"
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import MetaAnalytics from "@/components/MetaAnalytics";
 import WhatsappButton from '@/components/WhatsappButton'
 import CookieBaner from '@/components/CookieBanner'
 const inter = Inter({ subsets: ["latin"] })
@@ -88,6 +89,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <MetaAnalytics/>
         <GoogleAnalytics/>
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
