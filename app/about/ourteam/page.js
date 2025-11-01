@@ -82,7 +82,7 @@ const teamMembers = [
   name: "Ahmad Abubakar",
   position: "Video Editor",
   role: "VIDEO EDITOR",
-  bio: "Ahmad Abubakar is a skilled video editor with a passion for transforming raw footage into compelling stories. He specializes in creating engaging video content that not only entertains but also enhances brand visibility and audience engagement. With a keen eye for detail and proficiency in video editing tools, Muhammad crafts high-quality videos tailored to meet specific project goals.",
+  bio: "Skilled video editor creating engaging content that tells compelling stories and boosts brand engagement.",
   linkedin: "#",
   email: "#",
 }

@@ -32,13 +32,13 @@ const team = [
     linkedin: "https://www.linkedin.com/in/taha-khurram/",
     email: "",
   },
-  {
-    name: "Muhammad Ahmad",
-    role: "Content Writer",
-    img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032416/Hafiz_zabbso.png",
-    linkedin: "https://www.linkedin.com/in/ahmad-rajpootttt/",
-    email: "Cwriter448@gmail.com",
-  },
+  // {
+  //   name: "Muhammad Ahmad",
+  //   role: "Content Writer",
+  //   img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032416/Hafiz_zabbso.png",
+  //   linkedin: "https://www.linkedin.com/in/ahmad-rajpootttt/",
+  //   email: "Cwriter448@gmail.com",
+  // },
 ]
 
 export default function Team() {
@@ -55,7 +55,7 @@ export default function Team() {
           title="Our Creative Team"
         />
 
-        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {team.slice(0, 4).map((member, i) => (
             <motion.div
               key={member.name}
