@@ -14,7 +14,7 @@ import Footer from "@/components/footer";
 
 const teamMembers = [
   {
-    img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759932169/image-4096x4096_axfq0s.png",
+    img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032414/Fahad_hsf0lt.png",
     name: "Fahad Joyia",
     position: "Founder",
     role: "WEB DEVELOPMENT",
@@ -23,7 +23,7 @@ const teamMembers = [
     email: "fahad.joyia@example.com",
   },
   {
-    img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759944280/image-4096x4096_1_vs23xw.png",
+    img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032416/Jami_iigsv8.png",
     name: "Hisham Hussain",
     position: "Graphic Designer",
     role: "GRAPHICS DESIGN",
@@ -32,7 +32,7 @@ const teamMembers = [
     email: "jamispeaks.contact@gmail.com",
   },
   {
-    img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759944545/image-4096x4096_3_bmva0b.png",
+    img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032421/Hamid_hhvrjs.png",
     name: "Hamiz Asghar",
     position: "Full Stack Developer",
     role: "WEB DEVELOPMENT",
@@ -41,7 +41,7 @@ const teamMembers = [
     email: "hamizasghar@gmail.com",
   },
   {
-    img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759943688/image-4096x4096_2_abeh5p.png",
+    img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032417/Taha_m81z3r.png",
     name: "Taha Khurram",
     position: "Quality Assurance",
     role: "Quality Assurance",
@@ -50,7 +50,7 @@ const teamMembers = [
     email: "",
   },
  {
-  img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1759946290/image-4096x4096_4_v1in8h.png",
+  img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032423/Muneed_ob0tx7.png",
   name: "Muneeb Naqvi",
   position: "Web Developer",
   role: "WEB DEVELOPMENT",
@@ -68,7 +68,7 @@ const teamMembers = [
   email: "taha.khurram@example.com",
 },
 {
-  img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1760028740/image-4096x4096_5_qhuyfu.png",
+  img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032416/Hafiz_zabbso.png",
   name: "Muhammad Ahmad",
   position: "Content Writer",
   role: "CONTENT WRITER",
