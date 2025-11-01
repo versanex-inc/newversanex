@@ -32,6 +32,15 @@ const teamMembers = [
     email: "jamispeaks.contact@gmail.com",
   },
   {
+  img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032780/Moaz_yhoab2.png",
+  name: "Moaz Ahmad",
+  position: "Digital Marketer",
+  role: "Digital Marketer",
+  bio: "Focused on creating dynamic, efficient, and visually engaging web solutions.",
+  linkedin: "https://www.linkedin.com/in/taha-khurram/",
+  email: "taha.khurram@example.com",
+},
+  {
     img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032421/Hamid_hhvrjs.png",
     name: "Hamiz Asghar",
     position: "Full Stack Developer",
@@ -58,15 +67,7 @@ const teamMembers = [
   linkedin: "",
   email: "",
 },
-{
-  img: "https://res.cloudinary.com/dit3dubrf/image/upload/v1761165512/image-4096x4096_6_sztewo.png",
-  name: "Moaz Ahmad",
-  position: "Digital Marketer",
-  role: "Digital Marketer",
-  bio: "Focused on creating dynamic, efficient, and visually engaging web solutions.",
-  linkedin: "https://www.linkedin.com/in/taha-khurram/",
-  email: "taha.khurram@example.com",
-},
+
 {
   img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032416/Hafiz_zabbso.png",
   name: "Muhammad Ahmad",
@@ -103,12 +104,12 @@ const TeamCard = memo(({ member, index }) => (
   <div
     className="bg-white rounded-2xl shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-[1.015] hover:shadow-xl will-change-transform"
   >
-    <div className="relative w-full h-80 overflow-hidden">
+    {/* <div className="relative w-full h-80 overflow-hidden">
       <Image
         src={member.img}
         alt={member.name}
-        width={500}
-        height={320}
+        width={50}
+        height={50}
         quality={70}
         priority={index === 0}
         loading={index === 0 ? "eager" : "lazy"}
@@ -116,7 +117,23 @@ const TeamCard = memo(({ member, index }) => (
         className="object-cover w-full h-full opacity-0 animate-fadeIn transition-transform duration-300 hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-    </div>
+    </div> */}
+
+    <div className="relative w-full h-80 overflow-hidden">
+  <Image
+    src={member.img}
+    alt={member.name}
+    width={50}
+    height={50}
+    quality={70}
+    priority={index === 0}
+    loading={index === 0 ? "eager" : "lazy"}
+    fetchPriority={index === 0 ? "high" : "low"}
+    className="object-contain w-full h-full opacity-0 animate-fadeIn transition-transform duration-300 hover:scale-105"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+</div>
+
 
     <div className="p-6 text-center">
       <h3 className="text-lg font-bold text-gray-900">{member.name}</h3>

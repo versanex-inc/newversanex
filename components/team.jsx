@@ -8,6 +8,7 @@ import SectionHeading from "./section-heading"
 import { BiLogoLinkedinSquare } from "react-icons/bi"
 import { MdEmail } from "react-icons/md"
 import { FiArrowRight } from "react-icons/fi"
+import Image from "next/image"
 
 const team = [
   {
@@ -53,7 +54,7 @@ export default function Team() {
           }
           title="Our Creative Team"
         />
-        
+
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {team.slice(0, 4).map((member, i) => (
             <motion.div
@@ -64,13 +65,24 @@ export default function Team() {
               transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
               className="group relative rounded-2xl bg-white/95 backdrop-blur-sm p-6 border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
             >
-              <div className="mx-auto w-36 h-36 overflow-hidden rounded-full border-4 border-[#f2ad08]/20 shadow-lg">
+              {/* <div className="mx-auto w-36 h-36 overflow-hidden rounded-full border-4 border-[#f2ad08]/20 shadow-lg">
                 <img
                   src={member.img || "/placeholder.svg"}
                   alt={member.name}
                   className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
                 />
+              </div> */}
+
+              <div className="mx-auto w-36 h-36 overflow-hidden rounded-full border-4 border-[#f2ad08]/20 shadow-lg group">
+                <Image
+                  src={member.img || "/placeholder.svg"}
+                  alt={member.name}
+                  width={144} // 36 * 4 for the appropriate size (4x multiplier)
+                  height={144} // Same as width to maintain aspect ratio
+                  className="object-cover transition-transform duration-500 transform group-hover:scale-110"
+                />
               </div>
+
 
               <div className="mt-6 text-center">
                 <h3 className="text-xl font-bold text-gray-900 tracking-tight">{member.name}</h3>
