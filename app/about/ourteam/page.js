@@ -28,8 +28,10 @@ const teamMembers = [
     position: "Graphic Designer",
     role: "GRAPHICS DESIGN",
     bio: "Crafting visual identities that connect brands and audiences through creativity.",
-    linkedin: "https://www.linkedin.com/in/jamispeaks",
-    email: "jamispeaks.contact@gmail.com",
+    // linkedin: "https://www.linkedin.com/in/jamispeaks",
+    // email: "jamispeaks.contact@gmail.com",
+    linkedin: "#",
+    email: "#",
   },
   {
   img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032780/Moaz_yhoab2.png",

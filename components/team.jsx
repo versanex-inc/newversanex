@@ -22,8 +22,8 @@ const team = [
     name: "Hisham Hussain",
     role: "Graphic Designer",
     img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032416/Jami_iigsv8.png",
-    linkedin: "https://www.linkedin.com/in/jamispeaks",
-    email: "jamispeaks.contact@gmail.com",
+    linkedin: "#",
+    email: "#",
   },
   {
     name: "Moaz Ahmad",
