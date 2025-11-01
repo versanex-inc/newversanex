@@ -55,8 +55,8 @@ const teamMembers = [
     position: "Quality Assurance",
     role: "Quality Assurance",
     bio: "Driving growth through strategic campaigns and data-driven efforts.",
-    linkedin: "",
-    email: "",
+    linkedin: "#",
+    email: "#",
   },
  {
   img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032423/Muneed_ob0tx7.png",
@@ -64,8 +64,8 @@ const teamMembers = [
   position: "Web Developer",
   role: "WEB DEVELOPMENT",
   bio: "Skilled in building responsive and user-friendly websites with clean, modern design.",
-  linkedin: "",
-  email: "",
+  linkedin: "#",
+  email: "#",
 },
 
 {
@@ -77,6 +77,16 @@ const teamMembers = [
   linkedin: "https://www.linkedin.com/in/ahmad-rajpootttt/",
   email: "Cwriter448@gmail.com",
 },
+{
+  img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032413/Ahmed_tl9q1l.png",
+  name: "Ahmad Abubakar",
+  position: "Video Editor",
+  role: "VIDEO EDITOR",
+  bio: "Ahmad Abubakar is a skilled video editor with a passion for transforming raw footage into compelling stories. He specializes in creating engaging video content that not only entertains but also enhances brand visibility and audience engagement. With a keen eye for detail and proficiency in video editing tools, Muhammad crafts high-quality videos tailored to meet specific project goals.",
+  linkedin: "#",
+  email: "#",
+}
+
 
 ];
 
@@ -247,52 +257,6 @@ export default function TeamPage() {
           ))}
         </Swiper>
       </section>
-
-      {/* Join Us Section */}
-      {/* <section className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Become a <span className="text-amber-500">Team Member</span>
-        </h2>
-        <div className="h-1 w-20 bg-amber-500 mx-auto mb-6 rounded-full" />
-        <p className="text-gray-600 max-w-2xl mx-auto mb-8 text-lg">
-          We’re always looking for passionate individuals to join our growing
-          team. Shape the future with creativity and purpose.
-        </p>
-
-        {!showJoinForm ? (
-          <button
-            onClick={() => setShowJoinForm(true)}
-            className="px-8 py-3 bg-amber-500 text-white rounded-lg font-medium hover:bg-amber-600 transition-all duration-300"
-          >
-            Join Us
-          </button>
-        ) : (
-          <form className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg animate-fadeIn">
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500"
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500"
-              required
-            />
-            <input
-              type="file"
-              className="w-full mb-4 border border-gray-300 rounded-lg px-4 py-3 text-gray-700 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-amber-500 file:text-white hover:file:bg-amber-600"
-            />
-            <button
-              type="submit"
-              className="w-full py-3 bg-amber-500 text-white rounded-lg font-medium hover:bg-amber-600 transition duration-300"
-            >
-              Submit
-            </button>
-          </form>
-        )}
-      </section> */}
 
       <section className="py-20 px-6 max-w-5xl mx-auto text-center">
   <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
