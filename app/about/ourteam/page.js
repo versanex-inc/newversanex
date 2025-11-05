@@ -28,10 +28,8 @@ const teamMembers = [
     position: "Graphic Designer",
     role: "GRAPHICS DESIGN",
     bio: "Crafting visual identities that connect brands and audiences through creativity.",
-    // linkedin: "https://www.linkedin.com/in/jamispeaks",
-    // email: "jamispeaks.contact@gmail.com",
-    linkedin: "#",
-    email: "#",
+    linkedin: "https://www.linkedin.com/in/jamispeaks",
+    email: "jamispeaks.contact@gmail.com",
   },
   {
   img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032780/Moaz_yhoab2.png",
@@ -39,8 +37,8 @@ const teamMembers = [
   position: "Digital Marketer",
   role: "Digital Marketer",
   bio: "Focused on creating dynamic, efficient, and visually engaging web solutions.",
-  linkedin: "https://www.linkedin.com/in/taha-khurram/",
-  email: "taha.khurram@example.com",
+  linkedin: "https://www.linkedin.com/in/moaz-ahmed-2a996128b/",
+  email: "moazahmed.personal@gmail.com",
 },
   {
     img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032421/Hamid_hhvrjs.png",
@@ -57,8 +55,8 @@ const teamMembers = [
     position: "Quality Assurance",
     role: "Quality Assurance",
     bio: "Driving growth through strategic campaigns and data-driven efforts.",
-    linkedin: "#",
-    email: "#",
+    linkedin: "https://www.linkedin.com/in/muhammad-taha-khurram-2b77ba366?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    email: "m.tahaofficial007@gmail.com",
   },
  {
   img: "https://res.cloudinary.com/dbbbve4y4/image/upload/v1762032423/Muneed_ob0tx7.png",
@@ -66,8 +64,8 @@ const teamMembers = [
   position: "Web Developer",
   role: "WEB DEVELOPMENT",
   bio: "Skilled in building responsive and user-friendly websites with clean, modern design.",
-  linkedin: "#",
-  email: "#",
+  linkedin: "https://linkedin.com/in/Muneebnaqvi%20dev",
+  email: "muneebnaqvi7212@gmail.com",
 },
 
 {
@@ -86,7 +84,7 @@ const teamMembers = [
   role: "VIDEO EDITOR",
   bio: "Skilled video editor creating engaging content that tells compelling stories and boosts brand engagement.",
   linkedin: "#",
-  email: "#",
+  email: "ahmadabubakar0000008@gmail.com",
 }
 
 
