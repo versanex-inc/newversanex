@@ -36,7 +36,7 @@ const teamMembers = [
   name: "Moaz Ahmad",
   position: "Digital Marketer",
   role: "Digital Marketer",
-  bio: "Focused on creating dynamic, efficient, and visually engaging web solutions.",
+  bio: "Digital Marketer focused on driving growth through data-driven strategies and creative campaigns.",
   linkedin: "https://www.linkedin.com/in/moaz-ahmed-2a996128b/",
   email: "moazahmed.personal@gmail.com",
 },
@@ -114,21 +114,6 @@ const TeamCard = memo(({ member, index }) => (
   <div
     className="bg-white rounded-2xl shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-[1.015] hover:shadow-xl will-change-transform"
   >
-    {/* <div className="relative w-full h-80 overflow-hidden">
-      <Image
-        src={member.img}
-        alt={member.name}
-        width={50}
-        height={50}
-        quality={70}
-        priority={index === 0}
-        loading={index === 0 ? "eager" : "lazy"}
-        fetchPriority={index === 0 ? "high" : "low"}
-        className="object-cover w-full h-full opacity-0 animate-fadeIn transition-transform duration-300 hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-    </div> */}
-
     <div className="relative w-full h-80 overflow-hidden">
   <Image
     src={member.img}
