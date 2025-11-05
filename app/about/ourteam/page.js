@@ -36,7 +36,7 @@ const teamMembers = [
   name: "Moaz Ahmad",
   position: "Digital Marketer",
   role: "Digital Marketer",
-  bio: "Digital Marketer focused on driving growth through data-driven strategies and creative campaigns.",
+  bio: "Focused on driving growth through data-driven strategies and creative campaigns.",
   linkedin: "https://www.linkedin.com/in/moaz-ahmed-2a996128b/",
   email: "moazahmed.personal@gmail.com",
 },
