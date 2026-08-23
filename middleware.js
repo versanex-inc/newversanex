@@ -1,30 +1,10 @@
 import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
 async function verifyJWT(token) {
   try {
-    const [headerB64, payloadB64, signatureB64] = token.split(".");
-    if (!headerB64 || !payloadB64 || !signatureB64) return null;
-
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-    const key = await crypto.subtle.importKey(
-      "raw",
-      secret,
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["verify"]
-    );
-
-    const data = new TextEncoder().encode(`${headerB64}.${payloadB64}`);
-    const signature = Uint8Array.from(
-      atob(signatureB64.replace(/-/g, "+").replace(/_/g, "/")),
-      (c) => c.charCodeAt(0)
-    );
-
-    const valid = await crypto.subtle.verify("HMAC", key, signature, data);
-    if (!valid) return null;
-
-    const payload = JSON.parse(atob(payloadB64.replace(/-/g, "+").replace(/_/g, "/")));
-    if (payload.exp && Date.now() / 1000 > payload.exp) return null;
+    const { payload } = await jwtVerify(token, secret);
     return payload;
   } catch (err) {
     console.error("❌ JWT Verify Error:", err.message);
@@ -52,10 +32,10 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
+
   return NextResponse.next();
 }
 
 export const config = {
   matcher: ["/admin/:path*"],
 };
-
