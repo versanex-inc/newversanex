@@ -2320,7 +2320,8 @@ useEffect(() => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/projects');
+      // ?all=true so admin sees both draft and published projects
+      const response = await fetch('/api/projects?all=true');
       const result = await response.json();
       if (response.ok && result.success) {
         setProjects(result.data || []);
@@ -2343,6 +2344,7 @@ useEffect(() => {
       title: project?.title || '',
       category: project?.category || 'website-developing',
       subCategory: project?.subCategory || '',
+      publishStatus: project?.publishStatus || 'published',
       status: project?.status || 'Progress',
       projectType: project?.projectType || 'imageGallery',
       description: project?.description || '',
@@ -2359,12 +2361,13 @@ useEffect(() => {
 
     const disabledFieldsByCategory = {
       'website-developing': [],
+      'mobile-app-development': [],
+      'ui-ux': ['repoLink'],
       'graphic-designing': ['repoLink'],
       'video-editing': ['repoLink'],
       'content-writing': ['repoLink', 'features', 'imageUrl', 'galleryUrls'],
       'digital-marketing': ['repoLink'],
       'software-quality-assurance': [],
-      'ui-ux': ['repoLink'],
     };
 
     const disabledFields = disabledFieldsByCategory[formData.category] || [];
@@ -2411,6 +2414,7 @@ useEffect(() => {
       form.append('description', formData.description);
       form.append('category', formData.category);
       form.append('subCategory', formData.subCategory);
+      form.append('publishStatus', formData.publishStatus);
       form.append('status', formData.status);
       form.append('projectType', formData.projectType);
       form.append('skills', formData.skills);
@@ -2495,13 +2499,16 @@ useEffect(() => {
                   onChange={handleCategoryChange}
                   className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
-                  <option value="website-developing">Website Development</option>
-                  <option value="graphic-designing">Graphics Designing</option>
-                  <option value="video-editing">Video Editing</option>
-                  <option value="content-writing">Content Writing</option>
-                  <option value="digital-marketing">Digital Marketing</option>
-                  <option value="software-quality-assurance">Software Quality Assurance</option>
+                  {/* Active categories */}
+                  <option value="website-developing">Web Development</option>
+                  <option value="mobile-app-development">Mobile App Development</option>
                   <option value="ui-ux">UI/UX Design</option>
+                  {/* HIDDEN — comment back in to restore: */}
+                  {/* <option value="graphic-designing">Graphics Designing</option> */}
+                  {/* <option value="video-editing">Video Editing</option> */}
+                  {/* <option value="content-writing">Content Writing</option> */}
+                  {/* <option value="digital-marketing">Digital Marketing</option> */}
+                  {/* <option value="software-quality-assurance">Software Quality Assurance</option> */}
                 </select>
               </div>
 
@@ -2513,6 +2520,18 @@ useEffect(() => {
                   onChange={(e) => setFormData({ ...formData, subCategory: e.target.value })}
                   className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-amber-700 mb-1">Publish Status</label>
+                <select
+                  value={formData.publishStatus}
+                  onChange={(e) => setFormData({ ...formData, publishStatus: e.target.value })}
+                  className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                >
+                  <option value="draft">🔒 Draft (hidden from website)</option>
+                  <option value="published">✅ Published (visible on website)</option>
+                </select>
               </div>
 
               <div>
@@ -2992,9 +3011,18 @@ useEffect(() => {
               <div className="p-6">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="text-lg font-semibold text-amber-800 line-clamp-1">{project.title}</h3>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
-                    {project.status}
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
+                      {project.status}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      project.publishStatus === 'published'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      {project.publishStatus === 'published' ? '✅ Published' : '🔒 Draft'}
+                    </span>
+                  </div>
                 </div>
                 <p className="text-amber-600 text-sm mb-4 line-clamp-3">{project.description}</p>
 

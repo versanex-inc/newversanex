@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { motion } from "framer-motion"
@@ -65,31 +63,16 @@ export default function Advantages() {
       className="py-16 md:py-24 bg-gray-50 scroll-mt-20"
       aria-labelledby="why-heading"
     >
-      {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <SectionHeading
-            eyebrow="Why Choose VersaNex"
+            eyebrow={<span style={{ color: "#f2ad08" }}>Why Choose VersaNex</span>}
             title="Your Trusted Partner in Digital Growth"
             align="center"
           />
-        </div> */}
+        </div>
 
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  <div className="text-center">
-    <SectionHeading
-      eyebrow={<span style={{ color: "#f2ad08" }}>Why Choose VersaNex</span>}
-      title="Your Trusted Partner in Digital Growth"
-      align="center"
-    />
-  </div>
-
-
-        <div
-          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-          role="list"
-          aria-label="VersaNex advantages"
-        >
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map(({ icon: Icon, title, desc }, i) => (
             <motion.article
               key={title}

@@ -1,14 +1,12 @@
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Suspense } from "react";
-import { Inter } from "next/font/google"
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import MetaAnalytics from "@/components/MetaAnalytics";
 import WhatsappButton from '@/components/WhatsappButton'
 import CookieBaner from '@/components/CookieBanner'
-const inter = Inter({ subsets: ["latin"] })
+
 export const metadata = {
   title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
   description:
@@ -58,7 +56,7 @@ export const metadata = {
       },
     ],
   },
-openGraph: {
+  openGraph: {
     title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
     description:
       "We craft high-performance digital solutions — from websites and mobile apps to design, content, and marketing. Fast, scalable, and human-centered.",
@@ -87,16 +85,15 @@ openGraph: {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
+      </head>
+      <body className="font-sans antialiased">
         <MetaAnalytics/>
         <GoogleAnalytics/>
-      </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <CookieBaner/>
         <WhatsappButton/>
-        <Analytics />
       </body>
     </html>
   );

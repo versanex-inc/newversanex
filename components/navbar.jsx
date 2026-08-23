@@ -40,41 +40,41 @@ const services = [
     desc: "Dynamic and secure WordPress websites tailored for businesses, blogs, and portfolios.",
     href: "/services/wordpress-websites",
   },
-  {
-    icon: FiTrendingUp,
-    title: "Digital Marketing",
-    desc: "Data-driven digital marketing strategies that boost visibility, engagement, and sales.",
-    href: "/services/digital-marketing",
-  },
-  {
-    icon: FiVideo,
-    title: "Video Editing",
-    desc: "Creative video editing with cinematic storytelling and brand-focused visuals.",
-    href: "/services/video-editing",
-  },
-  {
-    icon: FiImage,
-    title: "Graphic Designing",
-    desc: "Professional and impactful designs — from branding to social media creatives.",
-    href: "/services/graphic-designing",
-  },
+  // {
+  //   icon: FiTrendingUp,
+  //   title: "Digital Marketing",
+  //   desc: "Data-driven digital marketing strategies that boost visibility, engagement, and sales.",
+  //   href: "/services/digital-marketing",
+  // },
+  // {
+  //   icon: FiVideo,
+  //   title: "Video Editing",
+  //   desc: "Creative video editing with cinematic storytelling and brand-focused visuals.",
+  //   href: "/services/video-editing",
+  // },
+  // {
+  //   icon: FiImage,
+  //   title: "Graphic Designing",
+  //   desc: "Professional and impactful designs — from branding to social media creatives.",
+  //   href: "/services/graphic-designing",
+  // },
   {
     icon: FiCheckCircle,
     title: "Software Quality Assurance",
     desc: "Comprehensive testing services ensuring flawless performance and reliability.",
     href: "/services/quality-assurance",
   },
-  {
-    icon: FiEdit3,
-    title: "Content Writing",
-    desc: "Engaging, SEO-optimized content that connects with your audience and drives conversions.",
-    href: "/services/content-writing",
-  },
+  // {
+  //   icon: FiEdit3,
+  //   title: "Content Writing",
+  //   desc: "Engaging, SEO-optimized content that connects with your audience and drives conversions.",
+  //   href: "/services/content-writing",
+  // },
 ]
 
 const aboutItems = [
   { icon: FiInfo, label: "Who We Are", href: "/about" },
-  { icon: FiUsers, label: "Team", href: "/about/ourteam" },
+  // { icon: FiUsers, label: "Team", href: "/about/ourteam" },
 { icon: FiBriefcase, label: "Get in Touch", href: "/contact" },
 
 ]
@@ -248,12 +248,12 @@ export default function Navbar() {
               priority
             />
             <span className="lg:text-3xl text-2xl font-extrabold tracking-tight text-gray-900 transition-colors duration-300">
-              {/* VersaNex */}
               <Image
-              src={"/brandname.png"}
-              height={130}
-              width={130}
-              alt="Brand Name"
+                src={"/brandname.png"}
+                height={130}
+                width={130}
+                alt="Brand Name"
+                priority
               />
             </span>
           </Link>

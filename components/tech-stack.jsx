@@ -1,7 +1,3 @@
-
-
-
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -39,7 +35,7 @@ const tech = [
   { icon: SiMongodb, label: "MongoDB", color: "text-[#47A248]" },
   { icon: SiGit, label: "Git", color: "text-[#F05032]" },
   { icon: SiGithub, label: "GitHub", color: "text-gray-800" },
-  { icon: FaBug, label: "JMeter", color: "text-[#D22128]" }, // Using FaBug for JMeter
+  { icon: FaBug, label: "JMeter", color: "text-[#D22128]" },
   { icon: SiTailwindcss, label: "Tailwind CSS", color: "text-[#06B6D4]" },
   { icon: SiFramer, label: "Framer Motion", color: "text-[#FF00A0]" },
   { icon: SiTypescript, label: "TypeScript", color: "text-[#3178C6]" },
@@ -51,7 +47,6 @@ export default function TechStack() {
   const [showAll, setShowAll] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect screen width for responsive logic
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024)
     handleResize()
@@ -68,24 +63,16 @@ export default function TechStack() {
       aria-labelledby="tech-heading"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Heading */}
-        {/* <div className="text-center">
+        <div className="text-center">
           <SectionHeading
-            eyebrow="Tools We Use"
+            eyebrow={
+              <span className="font-semibold" style={{ color: "#f2ad08" }}>
+                Tools We Use
+              </span>
+            }
             title="Modern, Proven, and Scalable Tech Stack"
             align="center"
-          /> */}
-
-          <div className="text-center">
-  <SectionHeading
-    eyebrow={
-      <span className="font-semibold" style={{ color: "#f2ad08" }}>
-        Tools We Use
-      </span>
-    }
-    title="Modern, Proven, and Scalable Tech Stack"
-    align="center"
-  />
+          />
           <p className="mt-4 text-gray-600 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
             We build with the most reliable, secure, and future-ready technologies to ensure
             performance, scalability, and visual excellence.
@@ -95,7 +82,6 @@ export default function TechStack() {
         {/* Tech Grid */}
         <div
           className="mt-12 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6 justify-items-center"
-          role="list"
           aria-label="Technology stack used by VersaNex"
         >
           {visibleTech.map(({ icon: Icon, label, color }, i) => (
@@ -126,7 +112,7 @@ export default function TechStack() {
           <div className="mt-10 text-center">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="px-6 py-2 rounded-full bg-[#f2ad08] text-white font-semibold hover:bg-[#d99607] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+              className="px-6 py-2 rounded-full bg-[#f2ad08] text-white font-semibold hover:bg-[#d88f07] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
             >
               {showAll ? "Show Less" : "View More"}
             </button>

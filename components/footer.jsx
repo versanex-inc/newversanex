@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState, useCallback } from "react";
@@ -33,6 +31,12 @@ export default function Footer() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
+        });
+
+        await fetch("https://formspree.io/f/mbgrbvvj", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, form: "Newsletter" }),
         });
 
         const data = await res.json();
@@ -73,7 +77,7 @@ export default function Footer() {
                 height={50}
                 width={50}
                 alt="VersaNex logo"
-                priority
+                loading="lazy"
               />
               <span className="text-2xl font-bold text-white">VersaNex</span>
             </div>
@@ -96,7 +100,7 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <FiPhone className="text-[#f2ad08]" aria-hidden="true" />
-                <a href="tel:+92345 7707337" className="hover:text-[#f2ad08]">
+                <a href="tel:+923457707337" className="hover:text-[#f2ad08]">
                   +92 345 7707337
                 </a>
               </p>
@@ -109,13 +113,14 @@ export default function Footer() {
 
           {/* 2️⃣ Company */}
           <nav aria-label="Company">
-            <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
+            <h3 className="text-lg font-semibold text-white mb-4">Company</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               {[
                 ["/about", "About Us"],
                 ["/services", "Our Services"],
-                ["/portfolio", "Case Studies"],
-                ["/about/ourteam", "Our Team"],
+                ["/projects", "Case Studies"],
+                // HIDDEN — comment back in to restore Our Team link:
+                // ["/about/ourteam", "Our Team"],
                 ["/contact", "Contact"],
               ].map(([link, text]) => (
                 <li key={text}>
@@ -129,7 +134,7 @@ export default function Footer() {
 
           {/* 3️⃣ Resources */}
           <nav aria-label="Resources">
-            <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
+            <h3 className="text-lg font-semibold text-white mb-4">Resources</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               {[
                 ["/faqs", "FAQs"],
@@ -147,7 +152,7 @@ export default function Footer() {
 
           {/* 4️⃣ Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Stay Updated</h4>
+            <h3 className="text-lg font-semibold text-white mb-4">Stay Updated</h3>
             <p className="text-gray-400 text-sm mb-4">
               Subscribe to our newsletter for exclusive updates and insights.
             </p>
@@ -157,11 +162,11 @@ export default function Footer() {
               className="flex items-center mb-6"
               aria-label="Newsletter Subscription Form"
             >
-              <label htmlFor="email" className="sr-only">
+              <label htmlFor="newsletter-email" className="sr-only">
                 Email address
               </label>
               <input
-                id="email"
+                id="newsletter-email"
                 type="email"
                 required
                 placeholder="Enter your email"
@@ -172,7 +177,7 @@ export default function Footer() {
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-r-md bg-[#f2ad08] text-white px-3 py-2 flex items-center gap-1 hover:bg-[#e5a000] transition-colors disabled:opacity-50"
+                className="rounded-r-md bg-[#f2ad08] text-white px-3 py-2 flex items-center gap-1 hover:bg-[#d88f07] transition-colors disabled:opacity-50"
                 aria-label="Subscribe"
               >
                 {loading ? (
@@ -186,14 +191,16 @@ export default function Footer() {
             {/* Social icons with animation */}
             <div className="flex gap-4" aria-label="Social media links">
               {[
-                { icon: FiFacebook, link: "https://www.facebook.com/versanexinc", label: "Twitter" },
+                { icon: FiFacebook, link: "https://www.facebook.com/versanexinc", label: "Facebook" },
                 { icon: FiInstagram, link: "https://www.instagram.com/versanexinc", label: "Instagram" },
-                { icon: FiLinkedin, link: "#", label: "LinkedIn" },
+                { icon: FiLinkedin, link: "https://www.linkedin.com/company/versanex", label: "LinkedIn" },
               ].map(({ icon: Icon, link, label }) => (
                 <motion.a
                   key={label}
                   href={link}
                   aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.15, y: -2 }}
                   whileTap={{ scale: 0.9 }}
                   className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-[#f2ad08] hover:bg-[#f2ad08] hover:text-black transition-all"

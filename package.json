@@ -8,6 +8,13 @@
     "lint": "next lint",
     "start": "next start"
   },
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "> 0.5%",
+    "not dead",
+    "not op_mini all",
+    "not ie 11"
+  ],
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
     "@gsap/react": "^2.1.2",

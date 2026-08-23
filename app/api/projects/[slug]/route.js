@@ -76,6 +76,7 @@ export async function PUT(req, { params }) {
 
       data.liveLink = form.get("liveLink");
       data.repoLink = form.get("repoLink");
+      data.publishStatus = form.get("publishStatus") || undefined;
 
       // data.creatorName = form.get("creatorName");
       // data.creatorNiche = form.get("creatorNiche");

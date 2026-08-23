@@ -1,6 +1,3 @@
-
-
-
 "use client"
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -14,18 +11,15 @@ export default function Contact() {
     service: "",
     description: "",
   })
-  const [consentChecked, setConsentChecked] = useState(false) // NEW
+  const [consentChecked, setConsentChecked] = useState(false)
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  // Handle form submission
   async function onSubmit(e) {
     e.preventDefault()
 
-    // Check if checkbox is checked
     if (!consentChecked) {
       alert("Please agree to the processing of your personal data before sending your vision.")
       return
@@ -38,11 +32,17 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
+
+      await fetch("https://formspree.io/f/mbgrbvvj", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, form: "Contact" }),
+      })
       const data = await response.json()
       if (data.success) {
         alert(`Thanks, ${formData.name || "[Client]"}! We’ll get back to you soon.`)
         setFormData({ name: "", email: "", service: "", description: "" })
-        setConsentChecked(false) // Reset checkbox
+        setConsentChecked(false)
       } else {
         alert("Failed to send message. Please try again.")
       }
@@ -59,7 +59,6 @@ export default function Contact() {
       id="contact"
       className="py-20 md:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden"
     >
-      {/* Background glow decorations */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#f2ad08]/5 to-[#d88f07]/5 opacity-50" />
       <div className="absolute top-20 left-10 w-64 h-64 bg-[#f2ad08]/10 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-20 right-10 w-72 h-72 bg-[#d88f07]/10 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -111,7 +110,6 @@ export default function Contact() {
           >
             <form onSubmit={onSubmit} className="space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
-                {/* Name */}
                 <div className="relative">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Your Name
@@ -128,7 +126,6 @@ export default function Contact() {
                   <div className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#f2ad08]/50">✍️</div>
                 </div>
 
-                {/* Email */}
                 <div className="relative">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Your Email
@@ -147,7 +144,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Service Dropdown */}
               <div className="relative">
                 <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
                   Select a Service
@@ -173,7 +169,6 @@ export default function Contact() {
                 <div className="absolute top-3 right-3 text-[#f2ad08]/50">⚙️</div>
               </div>
 
-              {/* Description */}
               <div className="relative">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                   Your Project Idea
@@ -191,7 +186,6 @@ export default function Contact() {
                 <div className="absolute top-3 right-3 text-[#f2ad08]/50">💡</div>
               </div>
 
-              {/* Consent */}
               <div className="flex items-start gap-3">
                 <input
                   id="consent"
@@ -205,7 +199,6 @@ export default function Contact() {
                 </label>
               </div>
 
-              {/* Submit Button */}
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(242, 173, 8, 0.3)" }}
                 whileTap={{ scale: 0.98 }}

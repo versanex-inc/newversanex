@@ -15,68 +15,36 @@ export default function Testimonials() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
 
-  // const testimonials = [
-  //   {
-  //     name: "Ayesha K.",
-  //     role: "Founder, Bloom",
-  //     quote: "VersaNex delivered beyond expectations — fast, beautiful, and effective.",
-  //     avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110277/avatar5_bcmpah.png",
-  //     rating: 5,
-  //   },
-  //   {
-  //     name: "Marcus L.",
-  //     role: "CTO, Fineta",
-  //     quote: "Expert team. Strong communication and quality engineering practices.",
-  //     avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110278/avatar8_v50w6m.png",
-  //     rating: 5,
-  //   },
-  //   {
-  //     name: "Sofia R.",
-  //     role: "PM, Orbit",
-  //     quote: "They deeply understood our users and shipped on time. Highly recommended!",
-  //     avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110277/avatar4_cq9q95.png",
-  //     rating: 5,
-  //   },
-  //   {
-  //     name: "Hassan I.",
-  //     role: "Manager, NextVision",
-  //     quote: "VersaNex transformed our digital presence with stunning results.",
-  //     avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110276/avatar1_qqhasy.png",
-  //     rating: 4,
-  //   },
-  // ]
-  
   const testimonials = [
     {
       name: "Farhan M.",
       role: "Owner, TimeCenter",
       quote: "VersaNex built an incredible website for TimeCenter. The process was smooth, and the final product exceeded all my expectations. I’m thrilled with the results!",
       avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110278/avatar8_v50w6m.png",
-    rating: 5,
-  },
-  {
-    name: "Ahmed R.",
-    role: "Entrepreneur, FoodieApp",
-    avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110276/avatar1_qqhasy.png",
-    quote: "We needed a robust food delivery app, and VersaNex delivered perfectly. The team was professional, responsive, and very creative. Highly recommended!",
-    rating: 5,
-  },
-  {
-    name: "Sara T.",
-    role: "Finance Manager, PakFin",
-    quote: "Our finance management system was complex, but VersaNex handled it brilliantly. Everything works flawlessly, and their support was excellent throughout.",
-    avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110277/avatar4_cq9q95.png",
-    rating: 5,
-  },
-  {
-    name: "Hina S.",
-    role: "Founder, SEOPro",
-    quote: "VersaNex created an SEO optimization tool that truly boosted our online presence. The team was attentive to our needs and delivered a polished product on time.",
-    avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110277/avatar5_bcmpah.png",
-    rating: 5,
-  },
-];
-
+      rating: 5,
+    },
+    {
+      name: "Ahmed R.",
+      role: "Entrepreneur, FoodieApp",
+      avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110276/avatar1_qqhasy.png",
+      quote: "We needed a robust food delivery app, and VersaNex delivered perfectly. The team was professional, responsive, and very creative. Highly recommended!",
+      rating: 5,
+    },
+    {
+      name: "Sara T.",
+      role: "Finance Manager, PakFin",
+      quote: "Our finance management system was complex, but VersaNex handled it brilliantly. Everything works flawlessly, and their support was excellent throughout.",
+      avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110277/avatar4_cq9q95.png",
+      rating: 5,
+    },
+    {
+      name: "Hina S.",
+      role: "Founder, SEOPro",
+      quote: "VersaNex created an SEO optimization tool that truly boosted our online presence. The team was attentive to our needs and delivered a polished product on time.",
+      avatar: "https://res.cloudinary.com/dit3dubrf/image/upload/v1756110277/avatar5_bcmpah.png",
+      rating: 5,
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -94,7 +62,7 @@ export default function Testimonials() {
     <section
       id="testimonials"
       ref={sectionRef}
-      className="py-20  md:py-28 bg-gradient-to-b from-gray-50 to-white overflow-hidden relative"
+      className="py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white overflow-hidden relative"
     >
       <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
         <SectionHeading
@@ -150,6 +118,7 @@ export default function Testimonials() {
                         width={80}
                         height={80}
                         className="rounded-full object-cover border-2 border-[#f2ad08]"
+                        loading="lazy"
                       />
                       <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-[#f2ad08] rounded-full flex items-center justify-center">
                         <Quote className="w-3 h-3 text-white" />
@@ -167,7 +136,7 @@ export default function Testimonials() {
                       ))}
                     </div>
 
-                    <h4 className="font-semibold text-gray-900">{t.name}</h4>
+                    <h3 className="font-semibold text-gray-900 text-lg">{t.name}</h3>
                     <p className="text-sm text-gray-500">{t.role}</p>
                   </div>
                 </motion.div>
@@ -183,7 +152,7 @@ export default function Testimonials() {
               transition-all duration-300 z-20`}
             aria-label="Previous testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -195,7 +164,7 @@ export default function Testimonials() {
               transition-all duration-300 z-20`}
             aria-label="Next testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>

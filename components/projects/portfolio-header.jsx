@@ -260,10 +260,15 @@ export default function PortfolioHeader({ onFilterChange }) {
 
   const categories = [
   { key: "All", label: "All" },
-  { key: "graphic-designing", label: "Graphics Design" },
   { key: "website-developing", label: "Web Development" },
-  { key: "video-editing", label: "Video Editing" },
-  { key: "ui-ux", label: "UI / UX" },
+  { key: "mobile-app-development", label: "Mobile App Development" },
+  { key: "ui-ux", label: "UI/UX Design" },
+  // Hidden — comment back in to restore:
+  // { key: "graphic-designing", label: "Graphics Design" },
+  // { key: "video-editing", label: "Video Editing" },
+  // { key: "content-writing", label: "Content Writing" },
+  // { key: "digital-marketing", label: "Digital Marketing" },
+  // { key: "software-quality-assurance", label: "Software QA" },
 ];
 
 

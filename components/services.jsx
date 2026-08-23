@@ -1,6 +1,3 @@
-
-
-
 "use client"
 
 import Link from "next/link"
@@ -29,30 +26,30 @@ const services = [
     desc: "Custom WordPress themes, plugins, and CMS-driven sites optimized for usability and Google Core Web Vitals.",
     slug: "wordpress-websites",
   },
-  {
-    icon: FiVideo,
-    title: "Video Editing",
-    desc: "Professional video production, motion graphics, and branded edits for engaging digital storytelling.",
-    slug: "video-editing",
-  },
-  {
-    icon: FiImage,
-    title: "Graphic Designing",
-    desc: "Creative visuals, UI/UX design, and branding assets crafted to elevate your digital presence.",
-    slug: "graphic-designing",
-  },
-  {
-    icon: FiTrendingUp,
-    title: "Digital Marketing",
-    desc: "ROI-driven marketing strategies including SEO, SEM, PPC, and social media campaigns for business growth.",
-    slug: "digital-marketing",
-  },
-  {
-    icon: FiEdit3,
-    title: "Content Writing",
-    desc: "Compelling, SEO-optimized content that enhances brand authority and boosts audience engagement.",
-    slug: "content-writing",
-  },
+  // {
+  //   icon: FiVideo,
+  //   title: "Video Editing",
+  //   desc: "Professional video production, motion graphics, and branded edits for engaging digital storytelling.",
+  //   slug: "video-editing",
+  // },
+  // {
+  //   icon: FiImage,
+  //   title: "Graphic Designing",
+  //   desc: "Creative visuals, UI/UX design, and branding assets crafted to elevate your digital presence.",
+  //   slug: "graphic-designing",
+  // },
+  // {
+  //   icon: FiTrendingUp,
+  //   title: "Digital Marketing",
+  //   desc: "ROI-driven marketing strategies including SEO, SEM, PPC, and social media campaigns for business growth.",
+  //   slug: "digital-marketing",
+  // },
+  // {
+  //   icon: FiEdit3,
+  //   title: "Content Writing",
+  //   desc: "Compelling, SEO-optimized content that enhances brand authority and boosts audience engagement.",
+  //   slug: "content-writing",
+  // },
   {
     icon: FiShield,
     title: "Software Quality Assurance",
@@ -68,20 +65,11 @@ export default function Services() {
       className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50"
       aria-labelledby="services-heading"
     >
-      {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="What We Do"
+          eyebrow={<span style={{ color: "#f2ad08" }}>What We Do</span>}
           title="Services Tailored to Your Business Goals"
-        /> */}
-
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  <SectionHeading
-    eyebrow={<span style={{ color: "#f2ad08" }}>What We Do</span>}
-    title="Services Tailored to Your Business Goals"
-  />
-
-
+        />
 
         {/* All content animates together */}
         <motion.div
@@ -91,10 +79,7 @@ export default function Services() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           {/* Services Grid */}
-          <div
-            className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            role="list"
-          >
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.slice(0, 6).map(({ icon: Icon, title, desc, slug }) => (
               <Link
                 key={title}
@@ -134,4 +119,3 @@ export default function Services() {
     </section>
   )
 }
-

@@ -1,24 +1,21 @@
-
-
-
-
-
-
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
-import Services from "@/components/services";
-import About from "@/components/about";
-import Portfolio from "@/components/portfolio";
-import Advantages from "@/components/advantages";
-import Testimonials from "@/components/testimonials";
-import TechStack from "@/components/tech-stack";
-import Instagram from "@/components/instagram";
-import Team from "@/components/team";
-import Contact from "@/components/contact";
-import Footer from "@/components/footer";
+import dynamic from "next/dynamic";
+import LazySection from "@/components/LazySection";
 
-// 👇 Import the popup component
-import DynamicPopup from "@/components/DynamicPopup";
+const Services = dynamic(() => import("@/components/services"));
+const About = dynamic(() => import("@/components/about"));
+const Portfolio = dynamic(() => import("@/components/portfolio"));
+const Advantages = dynamic(() => import("@/components/advantages"));
+const Testimonials = dynamic(() => import("@/components/testimonials"));
+const TechStack = dynamic(() => import("@/components/tech-stack"));
+const Instagram = dynamic(() => import("@/components/instagram"));
+// HIDDEN — Our Creative Team section (comment back in to restore)
+// const Team = dynamic(() => import("@/components/team"));
+
+const Contact = dynamic(() => import("@/components/contact"));
+const Footer = dynamic(() => import("@/components/footer"));
+const DynamicPopup = dynamic(() => import("@/components/DynamicPopup"));
 
 export default function HomePage() {
   return (
@@ -27,20 +24,49 @@ export default function HomePage() {
       <main id="main" className="flex flex-col">
         <Hero />
         <About />
-        <Services />
-        <Portfolio />
-        <Advantages />
-        <Testimonials />
-        <TechStack />
-        <Instagram />
-        <Team />
-        <Contact />
+
+        <LazySection minHeight="500px">
+          <Services />
+        </LazySection>
+
+        <LazySection minHeight="500px">
+          <Portfolio />
+        </LazySection>
+
+        <LazySection minHeight="400px">
+          <Advantages />
+        </LazySection>
+
+        <LazySection minHeight="400px">
+          <Testimonials />
+        </LazySection>
+
+        <LazySection minHeight="400px">
+          <TechStack />
+        </LazySection>
+
+        <LazySection minHeight="400px">
+          <Instagram />
+        </LazySection>
+
+        {/* HIDDEN — Our Creative Team section (comment back in to restore)
+        <LazySection minHeight="400px">
+          <Team />
+        </LazySection>
+        */}
+
+        <LazySection minHeight="500px">
+          <Contact />
+        </LazySection>
       </main>
 
-      {/* 👇 Show popup here */}
-      <DynamicPopup />
+      <LazySection minHeight="200px">
+        <DynamicPopup />
+      </LazySection>
 
-      <Footer />
+      <LazySection minHeight="300px">
+        <Footer />
+      </LazySection>
     </>
   );
 }

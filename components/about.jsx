@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import Image from "next/image"
@@ -20,25 +18,13 @@ export default function About() {
       className="py-16 md:py-24 bg-white scroll-mt-20"
       aria-labelledby="about-heading"
     >
-      {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section heading */}
         <SectionHeading
-          eyebrow="Who We Are"
+          eyebrow={<span style={{ color: "#f2ad08" }}>Who We Are</span>}
           title="Building Digital Experiences That Drive Real Impact"
           align="center"
-        /> */}
-
-
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  {/* Section heading */}
-  <SectionHeading
-    eyebrow={<span style={{ color: "#f2ad08" }}>Who We Are</span>}
-    title="Building Digital Experiences That Drive Real Impact"
-    align="center"
-  />
-
-
+        />
 
         {/* Content grid */}
         <div className="mt-10 grid items-center gap-10 md:grid-cols-2">
@@ -81,11 +67,11 @@ export default function About() {
           >
             <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
               <Image
-                src="https://res.cloudinary.com/dbbbve4y4/image/upload/v1760972371/about-our-studio-culture-and-process_fjhgzg.jpg"
+                src="https://res.cloudinary.com/dbbbve4y4/image/upload/w_600,h_450,c_fill,f_auto,q_auto/v1760972371/about-our-studio-culture-and-process_fjhgzg.jpg"
                 alt="Inside the VersaNex studio — our culture and process"
-                width={800}
-                height={600}
-                priority
+                width={600}
+                height={450}
+                loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
               />
             </div>

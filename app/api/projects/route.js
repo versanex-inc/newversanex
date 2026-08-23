@@ -13,12 +13,22 @@ function createSlug(title) {
     .replace(/-+/g, "-");
 }
 
-// ✅ GET: Fetch all projects
-export async function GET() {
+// ✅ GET: Fetch projects
+// Frontend gets only published. Admin passes ?all=true to get all.
+export async function GET(req) {
   try {
     await dbConnect();
 
-    const projects = await Project.find().lean();
+    const { searchParams } = new URL(req.url);
+    const showAll = searchParams.get('all') === 'true';
+
+    const query = showAll ? {} : { 
+      $or: [
+        { publishStatus: 'published' },
+        { publishStatus: { $exists: false } }
+      ]
+    };
+    const projects = await Project.find(query).lean();
 
     const formatted = projects.map((p) => ({
       _id: p._id.toString(),
@@ -27,6 +37,7 @@ export async function GET() {
       description: p.description,
       category: p.category,
       subCategory: p.subCategory || null,
+      publishStatus: p.publishStatus || 'published',
       status: p.status,
       images: p.images || [],
       skills: p.skills || [],
@@ -41,7 +52,6 @@ export async function GET() {
       createdAt: p.createdAt ? p.createdAt.toISOString().split("T")[0] : null,
     }));
 
-    // ✅ Always return success:true
     return NextResponse.json({ success: true, data: formatted }, { status: 200 });
   } catch (err) {
     console.error("Error fetching projects:", err);
@@ -71,6 +81,7 @@ export async function POST(req) {
         : [];
       data.liveLink = form.get("liveLink") || "";
       data.repoLink = form.get("repoLink") || "";
+      data.publishStatus = form.get("publishStatus") || "draft";
       data.imageFile = form.get("image");
       data.galleryFiles = form.getAll("gallery") || [];
     } else if (contentType.includes("application/json")) {
@@ -108,6 +119,7 @@ export async function POST(req) {
       slug,
       description: data.description,
       category: data.category,
+      publishStatus: data.publishStatus || 'draft',
       status: data.status,
       skills: data.skills,
       features: data.features,
