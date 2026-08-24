@@ -2309,9 +2309,9 @@ const ProjectsSection = ({ getStatusColor }) => {
 
   const [isMounted, setIsMounted] = useState(false);
 
-useEffect(() => {
-  setIsMounted(true);
-}, []);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     fetchProjects();
@@ -2688,8 +2688,8 @@ useEffect(() => {
                       {formData.galleryUrls.map((url, index) => (
                         <div key={index} className="relative">
                           <img src={url} alt={`Gallery ${index}`} className="w-full h-24 object-cover rounded-lg" />
-                          <button 
-                            onClick={() => removeGalleryImage(index)} 
+                          <button
+                            onClick={() => removeGalleryImage(index)}
                             className="absolute top-1 right-1 bg-white/80 p-1 rounded-full text-red-600 hover:text-red-800"
                           >
                             <FaTimes className="text-xs" />
@@ -2919,8 +2919,8 @@ useEffect(() => {
                           onChange={() => toggleSelect(img.secure_url)}
                           className="absolute top-1 right-1 w-4 h-4"
                         />
-                        <button 
-                          onClick={() => deleteImage(img.public_id)} 
+                        <button
+                          onClick={() => deleteImage(img.public_id)}
                           className="absolute bottom-1 right-1 bg-white/80 p-1 rounded-full text-red-600 text-xs"
                         >
                           <FaTrash />
@@ -3020,11 +3020,10 @@ useEffect(() => {
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
                       {project.status}
                     </span>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                      project.publishStatus === 'published'
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${project.publishStatus === 'published'
                         ? 'bg-green-100 text-green-700'
                         : 'bg-gray-100 text-gray-500'
-                    }`}>
+                      }`}>
                       {project.publishStatus === 'published' ? '✅ Published' : '🔒 Draft'}
                     </span>
                   </div>
@@ -3064,16 +3063,16 @@ useEffect(() => {
         </div>
       )}
 
-{showProjectModal && isMounted && createPortal(
-  <ProjectModal
-    project={selectedProject}
-    onClose={() => {
-      setShowProjectModal(false);
-      setSelectedProject(null);
-    }}
-  />,
-  document.body
-)}
+      {showProjectModal && isMounted && createPortal(
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => {
+            setShowProjectModal(false);
+            setSelectedProject(null);
+          }}
+        />,
+        document.body
+      )}
     </div>
   );
 };
