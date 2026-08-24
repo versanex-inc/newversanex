@@ -2817,11 +2817,15 @@ useEffect(() => {
     };
 
     const openUploadWidget = (sources) => {
+      if (!window.cloudinary) {
+        toast.error('Cloudinary widget is still loading. Please try again in a moment.');
+        return;
+      }
       getUploadSignature().then(({ timestamp, signature }) => {
         const myWidget = window.cloudinary.openUploadWidget(
           {
-            cloudName,
-            apiKey,
+            cloudName: cloudName?.trim(),
+            apiKey: apiKey?.trim(),
             uploadSignature: signature,
             uploadSignatureTimestamp: timestamp,
             sources,
@@ -2831,7 +2835,7 @@ useEffect(() => {
           },
           (error, result) => {
             if (error) {
-              console.error(error);
+              console.error('Cloudinary Widget Error:', error);
               return;
             }
             if (result.event === 'success') {
@@ -2845,6 +2849,7 @@ useEffect(() => {
           }
         );
       }).catch(error => {
+        console.error('Signature Error:', error);
         toast.error('Error opening upload widget');
       });
     };
