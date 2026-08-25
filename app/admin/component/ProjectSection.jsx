@@ -2743,9 +2743,12 @@ const ProjectsSection = ({ getStatusColor }) => {
     const [images, setImages] = useState([]);
     const [selected, setSelected] = useState([]);
     const [galleryLoading, setGalleryLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const [urlInput, setUrlInput] = useState('');
+    const fileInputRef = React.useRef(null);
 
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim();
+    const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY?.trim();
 
     useEffect(() => {
       if (activeTab === 'gallery') {
@@ -2810,53 +2813,70 @@ const ProjectsSection = ({ getStatusColor }) => {
       onClose();
     };
 
-    const getUploadSignature = async () => {
-      const response = await fetch('/api/cloudinary/upload-signature');
-      if (!response.ok) throw new Error('Failed to get signature');
-      return await response.json();
-    };
-
-    const openUploadWidget = (sources) => {
-      if (!window.cloudinary) {
-        toast.error('Cloudinary widget is still loading. Please try again in a moment.');
+    const handleFileChange = async (e) => {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      if (!cloudName || !apiKey) {
+        toast.error('Cloudinary is not configured. Check your .env file.');
         return;
       }
-      getUploadSignature().then(({ timestamp, signature }) => {
-        const myWidget = window.cloudinary.openUploadWidget(
-          {
-            cloudName: cloudName?.trim(),
-            apiKey: apiKey?.trim(),
-            uploadSignature: signature,
-            uploadSignatureTimestamp: timestamp,
-            sources,
-            multiple: !isSingle,
-            maxFiles: isSingle ? 1 : 10,
-            folder: 'projects',
-          },
-          (error, result) => {
-            if (error) {
-              console.error('Cloudinary Widget Error:', error);
-              return;
-            }
-            if (result.event === 'success') {
-              const url = result.info.secure_url;
-              onSelect([url]);
-              if (isSingle) onClose();
-            }
-            if (result.event === 'queues-end' && !isSingle) {
-              onClose();
-            }
+      setUploading(true);
+      try {
+        const sigRes = await fetch('/api/cloudinary/upload-signature');
+        if (!sigRes.ok) throw new Error('Failed to get upload signature');
+        const { timestamp, signature } = await sigRes.json();
+
+        const uploadedUrls = [];
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('api_key', apiKey);
+          formData.append('timestamp', timestamp);
+          formData.append('signature', signature);
+          formData.append('folder', 'projects');
+          formData.append('source', 'uw');
+
+          const res = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+            { method: 'POST', body: formData }
+          );
+          if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData?.error?.message || 'Upload failed');
           }
-        );
-      }).catch(error => {
-        console.error('Signature Error:', error);
-        toast.error('Error opening upload widget');
-      });
+          const data = await res.json();
+          uploadedUrls.push(data.secure_url);
+          if (isSingle) break;
+        }
+
+        onSelect(uploadedUrls);
+        toast.success(`${uploadedUrls.length} image(s) uploaded!`);
+        onClose();
+      } catch (err) {
+        console.error('Upload error:', err);
+        toast.error(`Upload failed: ${err.message}`);
+      } finally {
+        setUploading(false);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+      }
+    };
+
+    const handleUrlSubmit = () => {
+      const urls = urlInput
+        .split('\n')
+        .map(u => u.trim())
+        .filter(u => u.length > 0);
+      if (urls.length === 0) {
+        toast.error('Please enter at least one image URL.');
+        return;
+      }
+      onSelect(isSingle ? [urls[0]] : urls);
+      onClose();
     };
 
     return (
-      <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-amber-800">Image Upload</h3>
             <button onClick={onClose} className="text-gray-500 hover:text-amber-700">
@@ -2868,38 +2888,84 @@ const ProjectsSection = ({ getStatusColor }) => {
               onClick={() => setActiveTab('upload')}
               className={`flex-1 py-2 rounded-lg transition-colors ${activeTab === 'upload' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'}`}
             >
-              Upload
+              📁 Device
             </button>
             <button
               onClick={() => setActiveTab('url')}
               className={`flex-1 py-2 rounded-lg transition-colors ${activeTab === 'url' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'}`}
             >
-              URL
+              🔗 URL
             </button>
             <button
               onClick={() => setActiveTab('gallery')}
               className={`flex-1 py-2 rounded-lg transition-colors ${activeTab === 'gallery' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'}`}
             >
-              Gallery
+              🖼 Gallery
             </button>
           </div>
+
           <div>
             {activeTab === 'upload' && (
-              <button
-                onClick={() => openUploadWidget(['local'])}
-                className="w-full px-6 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
-              >
-                Upload from Device
-              </button>
+              <div className="space-y-4">
+                <div
+                  className="border-2 border-dashed border-amber-300 rounded-xl p-8 text-center cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-all"
+                  onClick={() => !uploading && fileInputRef.current?.click()}
+                >
+                  {uploading ? (
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
+                      <p className="text-amber-600 font-medium">Uploading to Cloudinary...</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="text-4xl">📤</div>
+                      <p className="text-amber-700 font-semibold">Click to select {isSingle ? 'an image' : 'images'}</p>
+                      <p className="text-gray-400 text-sm">JPG, PNG, WebP, GIF supported</p>
+                    </div>
+                  )}
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple={!isSingle}
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </div>
             )}
+
             {activeTab === 'url' && (
-              <button
-                onClick={() => openUploadWidget(['url'])}
-                className="w-full px-6 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
-              >
-                Add from URL
-              </button>
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-amber-700">
+                  {isSingle ? 'Paste image URL' : 'Paste image URLs (one per line)'}
+                </label>
+                {isSingle ? (
+                  <input
+                    type="url"
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    placeholder="https://example.com/image.jpg"
+                    className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                ) : (
+                  <textarea
+                    rows={4}
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    placeholder={"https://example.com/image1.jpg\nhttps://example.com/image2.jpg"}
+                    className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-y"
+                  />
+                )}
+                <button
+                  onClick={handleUrlSubmit}
+                  className="w-full px-6 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium"
+                >
+                  ✓ Use This URL{!isSingle ? '(s)' : ''}
+                </button>
+              </div>
             )}
+
             {activeTab === 'gallery' && (
               <div className="space-y-4">
                 {galleryLoading ? (
@@ -2907,21 +2973,21 @@ const ProjectsSection = ({ getStatusColor }) => {
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-500"></div>
                   </div>
                 ) : images.length === 0 ? (
-                  <p className="text-center text-amber-600 py-4">No images in gallery.</p>
+                  <p className="text-center text-amber-600 py-4">No images in gallery. Upload some first!</p>
                 ) : (
                   <div className="grid grid-cols-3 gap-3 max-h-64 overflow-y-auto p-2 border border-amber-200 rounded-lg">
                     {images.map((img) => (
-                      <div key={img.public_id} className="relative">
+                      <div key={img.public_id} className="relative group">
                         <img src={img.secure_url} alt="" className="w-full h-24 object-cover rounded" />
                         <input
                           type="checkbox"
                           checked={selected.includes(img.secure_url)}
                           onChange={() => toggleSelect(img.secure_url)}
-                          className="absolute top-1 right-1 w-4 h-4"
+                          className="absolute top-1 right-1 w-4 h-4 accent-amber-500"
                         />
                         <button
                           onClick={() => deleteImage(img.public_id)}
-                          className="absolute bottom-1 right-1 bg-white/80 p-1 rounded-full text-red-600 text-xs"
+                          className="absolute bottom-1 right-1 bg-white/80 p-1 rounded-full text-red-600 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <FaTrash />
                         </button>
@@ -2940,9 +3006,9 @@ const ProjectsSection = ({ getStatusColor }) => {
                   <button
                     onClick={insertSelected}
                     disabled={selected.length === 0}
-                    className="flex-1 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 disabled:opacity-50 transition-colors"
+                    className="flex-1 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 disabled:opacity-50 transition-colors font-medium"
                   >
-                    Insert
+                    ✓ Insert
                   </button>
                 </div>
                 <button
