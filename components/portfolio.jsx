@@ -1,27 +1,13 @@
 "use client"
 
 import { useMemo, useState, useEffect } from "react"
-import SectionHeading from "./section-heading"
 import Image from "next/image"
-
-const ACCENT = "#d88f07"
-
-// Active categories — only these 3 are shown on frontend
-const displayCategories = ["All", "Web Development", "Mobile App Development", "UI/UX Design"]
-const categoryMap = {
-  "All": "All",
-  "Web Development": "website-developing",
-  "Mobile App Development": "mobile-app-development",
-  "UI/UX Design": "ui-ux",
-}
-
-// Categories hidden from frontend display (kept in DB enum, not shown to visitors)
-const HIDDEN_CATEGORIES = ["graphic-designing", "video-editing", "content-writing", "digital-marketing", "software-quality-assurance"]
+import Link from "next/link"
+import { motion } from "framer-motion"
 
 export default function Portfolio() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
-  const [active, setActive] = useState("All")
 
   useEffect(() => {
     fetch("/api/projects")
@@ -31,168 +17,146 @@ export default function Portfolio() {
           setProjects(data.data)
         }
       })
-      .catch((err) => {
-        console.error("Error fetching projects:", err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      .catch((err) => { console.error("Error fetching projects:", err) })
+      .finally(() => { setLoading(false) })
   }, [])
 
-  const filtered = useMemo(() => {
-    // Start by filtering out hidden categories sitewide
-    const visibleProjects = projects.filter((p) => !HIDDEN_CATEGORIES.includes(p.category))
+  const displayProjects = useMemo(() => projects.slice(0, 4), [projects])
+  const leftColumn = useMemo(() => displayProjects.filter((_, i) => i % 2 === 0), [displayProjects])
+  const rightColumn = useMemo(() => displayProjects.filter((_, i) => i % 2 !== 0), [displayProjects])
 
-    let filteredProjects = active === "All"
-      ? visibleProjects
-      : visibleProjects.filter((p) => p.category === categoryMap[active])
-
-    return filteredProjects.slice(0, 8)
-  }, [active, projects])
-
-  const jsonLd = useMemo(() => {
-    const itemListElement = filtered.map((p, i) => ({
+  const jsonLd = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: displayProjects.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: p.href || "#",
+      url: `/projects/${p.slug}`,
       name: p.title,
-    }))
-    return {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      itemListElement,
-    }
-  }, [filtered])
+    })),
+  }), [displayProjects])
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+  }
+  const leftCardVariants = {
+    hidden: { opacity: 0, y: -35 },
+    visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] } })
+  }
+  const rightCardVariants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.12 + 0.1, ease: [0.16, 1, 0.3, 1] } })
+  }
+
+  const ProjectCard = ({ p, variants, index }) => (
+    <motion.article
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={variants}
+      className="group relative flex flex-col cursor-pointer"
+    >
+      <Link href={`/projects/${p.slug}`} className="block">
+        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl bg-slate-200 dark:bg-neutral-900 shadow-sm transition-all duration-500 group-hover:shadow-2xl">
+          <Image
+            src={p.images?.[0]?.url || "/placeholder.svg"}
+            alt={`${p.title} preview`}
+            fill unoptimized
+            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:opacity-0" />
+          <div className="absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105">
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </div>
+          {p.category && (
+            <div className="absolute bottom-3.5 right-3.5 z-10 px-3 py-1 rounded-md bg-[#121417]/85 backdrop-blur-md border border-white/10 text-[10px] font-semibold text-white tracking-wider uppercase">
+              {p.category.replace(/-/g, " ")}
+            </div>
+          )}
+        </div>
+        <div className="mt-3.5 flex items-start justify-between gap-4">
+          <div>
+            <h3 className="text-lg sm:text-xl font-normal text-slate-900 dark:text-white tracking-tight group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+              {p.title}
+            </h3>
+            <p className="mt-0.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal line-clamp-1">
+              {p.description || "Digital Platform & Custom Code"}
+            </p>
+          </div>
+          <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 font-normal pt-1 shrink-0">
+            {p.year || "2026"}
+          </span>
+        </div>
+      </Link>
+    </motion.article>
+  )
 
   return (
-    <section id="work" aria-labelledby="work-heading" className="py-20 md:py-28 bg-white dark:bg-[#0b0b0b]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow={<span style={{ color: "#f2ad08" }}>Our Work</span>}
-          title="Projects That Speak for Themselves"
-          description="Every project we build is crafted with strategy, creativity, and technology — delivering measurable business growth."
-        />
+    <section id="work" aria-labelledby="work-heading" className="py-20 sm:py-28 bg-[#F8F9FA] dark:bg-[#0B0C0E] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 antialiased">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
 
-        {/* Filter buttons */}
-        <div
-          role="tablist"
-          aria-label="Project categories"
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
+        <motion.div
+          initial="hidden" whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={headerVariants}
+          className="mb-16 sm:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
-          {displayCategories.map((c) => {
-            const selected = c === active
-            return (
-              <button
-                key={c}
-                onClick={() => setActive(c)}
-                role="tab"
-                aria-selected={selected ? "true" : "false"}
-                id={`tab-${c.toLowerCase().replace(/\s+/g, '-')}`}
-                className={`px-4 py-2 rounded-full border text-sm font-medium transition-all duration-300 ${
-                  selected
-                    ? "bg-[#d88f07] text-white shadow-md scale-105 border-[#d88f07]"
-                    : "text-gray-600 dark:text-gray-300 hover:text-black hover:border-[#d88f07] dark:hover:text-white"
-                }`}
-              >
-                {c}
-              </button>
-            )
-          })}
-        </div>
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-slate-900 dark:bg-white" />
+              <span className="text-[11px] font-mono font-medium uppercase tracking-widest text-slate-500 dark:text-slate-400">OUR PROJECTS</span>
+            </div>
+            <h2 id="work-heading" className="text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+              Selected Works &amp;<br />Digital Experiences.
+            </h2>
+          </div>
+          <p className="max-w-xs text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-normal md:pb-1">
+            A curated collection of modern web platforms, bespoke applications, and high-performance digital products engineered for precision.
+          </p>
+        </motion.div>
 
-        {/* Project grid with min-height and reserved skeleton space to eliminate CLS */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[500px]">
+        <div className="min-h-[400px]">
           {loading ? (
-            /* Skeleton cards matching exact dimensions during initial fetch */
-            [...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className={`rounded-2xl border border-gray-100 bg-gray-50/50 dark:bg-neutral-900/50 overflow-hidden ${
-                  i === 0 && active === "All" ? "sm:col-span-2 lg:col-span-2" : ""
-                }`}
-              >
-                <div className="aspect-video bg-gray-200 dark:bg-neutral-800 animate-pulse" />
-                <div className="p-5 space-y-3">
-                  <div className="h-6 w-3/4 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
-                  <div className="h-4 w-full bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="space-y-4">
+                  <div className="aspect-[16/11] rounded-2xl bg-slate-200 dark:bg-neutral-800 animate-pulse" />
+                  <div className="h-5 w-1/2 bg-slate-200 dark:bg-neutral-800 rounded animate-pulse" />
                 </div>
+              ))}
+            </div>
+          ) : displayProjects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
+              <div className="flex flex-col gap-12 sm:gap-16">
+                {leftColumn.map((p, i) => <ProjectCard key={p.slug || i} p={p} index={i} variants={leftCardVariants} />)}
               </div>
-            ))
-          ) : filtered.length > 0 ? (
-            filtered.map((p, i) => {
-              const isFeatured = i === 0 && active === "All"
-              return (
-                <article
-                  key={p.title || p.slug || i}
-                  className={`group relative overflow-hidden rounded-2xl border bg-white dark:bg-neutral-900 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ${
-                    isFeatured ? "sm:col-span-2 lg:col-span-2" : ""
-                  }`}
-                >
-                  <a href={`/projects/${p.slug}`} aria-label={`Open project: ${p.title}`} className="absolute inset-0 z-10" />
-
-                  <div className="aspect-video overflow-hidden relative bg-gray-100 dark:bg-neutral-800">
-                    <Image
-                      src={p.images?.[0]?.url || "/placeholder.svg"}
-                      alt={`${p.title} showcase image`}
-                      width={1280}
-                      height={720}
-                      unoptimized
-                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-
-                  <div className="relative z-20 p-5">
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{p.description}</p>
-                  </div>
-
-                  {/* Tag badge */}
-                  <span
-                    className="absolute top-4 left-4 z-20 rounded-full px-3 py-1 text-xs font-medium shadow-sm backdrop-blur-sm"
-                    style={{
-                      backgroundColor: "color-mix(in srgb, " + ACCENT + " 20%, transparent)",
-                      color: ACCENT,
-                      border: `1px solid ${ACCENT}40`,
-                    }}
-                  >
-                    {p.category}
-                  </span>
-
-                  {/* Hover CTA */}
-                  <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <div className="rounded-full border px-3 py-1.5 text-xs font-medium text-gray-900 bg-white/80 backdrop-blur-md dark:bg-white/10 dark:text-white">
-                      Case Study
-                    </div>
-                    <div
-                      className="rounded-full px-3 py-1.5 text-xs font-medium"
-                      style={{ backgroundColor: ACCENT, color: "#fff" }}
-                    >
-                      View Details →
-                    </div>
-                  </div>
-                </article>
-              )
-            })
+              <div className="flex flex-col gap-12 sm:gap-16 md:pt-20">
+                {rightColumn.map((p, i) => <ProjectCard key={p.slug || i} p={p} index={i} variants={rightCardVariants} />)}
+              </div>
+            </div>
           ) : (
-            <article
-              key="coming-soon"
-              className="relative overflow-hidden rounded-2xl border bg-white dark:bg-neutral-900 shadow-sm col-span-full text-center p-12 min-h-[300px] flex flex-col items-center justify-center"
-            >
-              <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">
-                Coming Soon
-              </h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Exciting projects in this category are on the way!
-              </p>
-            </article>
+            <div className="rounded-2xl border border-dashed border-slate-300 dark:border-neutral-800 p-16 text-center">
+              <h3 className="text-base font-normal text-slate-900 dark:text-white">No projects found</h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 font-normal">Check back later for recent case studies.</p>
+            </div>
           )}
         </div>
 
-        {/* SEO JSON-LD */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }}
+          className="mt-16 sm:mt-24 flex justify-center"
+        >
+          <Link href="/projects" className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-black hover:bg-[#f2ad08] text-white hover:text-[#141b26] font-medium text-xs tracking-wide shadow-md transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]">
+            View All Projects
+          </Link>
+        </motion.div>
+
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </div>
     </section>

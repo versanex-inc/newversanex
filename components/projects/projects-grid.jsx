@@ -1,222 +1,118 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { projectCategories } from "./portfolio-header"
+import styles from "./projects-gallery.module.css"
+import ProjectListRow from "./project-list-row"
 
-// Categories hidden from frontend — kept in DB enum but not shown to visitors
-const HIDDEN_CATEGORIES = ["graphic-designing", "video-editing", "content-writing", "digital-marketing", "software-quality-assurance"];
+const HIDDEN_CATEGORIES = ["graphic-designing", "video-editing", "content-writing", "digital-marketing", "software-quality-assurance"]
+const PER_PAGE = 8
 
-export default function ProjectsGrid({ category }) {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 9;
+export default function ProjectsGrid({ category, view = "grid" }) {
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const controller = new AbortController()
+    async function load() {
       try {
-        const res = await fetch("/api/projects", { cache: "no-store" });
-        const result = await res.json();
-
-        if (res.ok && result.success) {
-          if (Array.isArray(result.data)) {
-            setProjects(result.data);
-          } else {
-            console.error("Expected array but got:", result.data);
-            setProjects([]);
-          }
-        } else {
-          console.error(result.error || "Failed to fetch projects");
-          setError(result.error || "Failed to load projects");
-        }
+        const res = await fetch("/api/projects", { cache: "no-store", signal: controller.signal })
+        const result = await res.json()
+        if (!res.ok || !result.success || !Array.isArray(result.data)) throw new Error("Unable to load projects. Please refresh and try again.")
+        setProjects(result.data)
       } catch (err) {
-        console.error("Error fetching projects:", err);
-        setError("Error loading projects");
+        if (err.name !== "AbortError") setError("Unable to load projects. Please refresh and try again.")
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false)
       }
-    };
-
-    fetchProjects();
-  }, []);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [category]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
-
-  const filteredProjects = projects
-    .filter((project) => !HIDDEN_CATEGORIES.includes(project.category)) // hide removed categories
-    .filter((project) => {
-      if (!category || category === "All") return true;
-      const slugify = (str) => str?.toLowerCase().replace(/\s+/g, "-") || "";
-      return slugify(project.category) === category;
-    });
-
-  if (loading) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 py-6">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 animate-pulse">
-            <div className="w-full h-48 sm:h-56 lg:h-60 bg-gray-200" />
-            <div className="p-4 sm:p-5 space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-3/4" />
-              <div className="h-3 bg-gray-200 rounded w-full" />
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p className="text-center text-red-500 py-10">{error}</p>;
-  }
-
-  if (filteredProjects.length === 0) {
-    return (
-      <p className="text-center text-gray-600 py-10">No projects found in this category.</p>
-    );
-  }
-
-  let mixedProjects = filteredProjects;
-  if (!category || category === "All") {
-    const uniqueCategories = [...new Set(filteredProjects.map((p) => p.category))].sort();
-    const projectsByCat = {};
-    uniqueCategories.forEach((cat) => {
-      projectsByCat[cat] = filteredProjects.filter((p) => p.category === cat);
-    });
-    let mixed = [];
-    const maxLen = Math.max(...uniqueCategories.map((cat) => projectsByCat[cat].length));
-    for (let i = 0; i < maxLen; i++) {
-      uniqueCategories.forEach((cat) => {
-        if (projectsByCat[cat][i]) {
-          mixed.push(projectsByCat[cat][i]);
-        }
-      });
     }
-    mixedProjects = mixed;
-  }
+    load()
+    return () => controller.abort()
+  }, [])
 
-  const totalPages = Math.ceil(mixedProjects.length / projectsPerPage);
-  const indexOfLast = currentPage * projectsPerPage;
-  const indexOfFirst = indexOfLast - projectsPerPage;
-  const currentProjects = mixedProjects.slice(indexOfFirst, indexOfLast);
+  useEffect(() => { setCurrentPage(1) }, [category])
+
+  const filtered = projects.filter(project => {
+    const key = project.category?.toLowerCase().replace(/\s+/g, "-") || ""
+    return !HIDDEN_CATEGORIES.includes(key) && (!category || category === "All" || key === category)
+  })
+  let ordered = filtered
+  if (!category || category === "All") {
+    const categories = [...new Set(filtered.map(project => project.category))].sort()
+    const groups = categories.map(key => filtered.filter(project => project.category === key))
+    ordered = []
+    for (let index = 0; index < Math.max(0, ...groups.map(group => group.length)); index++) {
+      groups.forEach(group => { if (group[index]) ordered.push(group[index]) })
+    }
+  }
+  const pages = Math.ceil(ordered.length / PER_PAGE)
+  const page = Math.min(currentPage, Math.max(1, pages))
+  const gridClass = `${styles.grid} ${view === "list" ? styles.list : ""}`
+
+  if (loading) return (
+    <div className={gridClass} aria-busy="true" aria-label="Loading projects">
+      {Array.from({ length: 4 }, (_, index) => (
+        <div key={index} aria-hidden="true" className={view === "list" ? styles.rowSkeleton : undefined}>
+          {view !== "list" && <div className={styles.image} />}<div className={styles.skeleton} />
+        </div>
+      ))}
+    </div>
+  )
+  if (error) return <p role="alert" className={styles.message}>{error}</p>
+  if (!ordered.length) return <p role="status" className={styles.message}>No projects found in this category.</p>
+
+  function changePage(nextPage) {
+    setCurrentPage(nextPage)
+    document.getElementById("projects")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    })
+  }
 
   return (
-    <section className="py-6 sm:py-10 lg:py-12">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-        {currentProjects.map((project) => {
-          const rawImageUrl = project.images?.[0]?.url;
-          const imageUrl = rawImageUrl && typeof rawImageUrl === 'string' && rawImageUrl.trim() !== ''
-            ? rawImageUrl
-            : "/placeholder.svg";
-
+    <>
+      <div className={gridClass}>
+        {ordered.slice((page - 1) * PER_PAGE, page * PER_PAGE).map((project, index) => {
+          const image = project.images?.[0]
+          const imageUrl = typeof image?.url === "string" && image.url.trim() ? image.url : "/placeholder.svg"
+          const label = projectCategories.find(item => item.key === project.category)?.label || project.category?.replace(/-/g, " ")
+          const date = project.createdAt ? new Date(project.createdAt) : null
+          const year = date && !Number.isNaN(date.getTime()) ? date.getFullYear() : null
+          const tags = [...new Set([label, project.subCategory || project.skills?.[0]])].filter(Boolean)
+          if (view === "list") return (
+            <ProjectListRow key={`${category}-${page}-${project._id}`} project={project}
+              number={(page - 1) * PER_PAGE + index + 1} imageUrl={imageUrl} label={label} />
+          )
           return (
-            <motion.div
-              key={project._id}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all border border-gray-100"
-            >
-              {/* 🖼️ Image Section */}
-              <div className="relative w-full h-48 sm:h-56 lg:h-60 bg-gray-100">
-                <Image
-                  src={imageUrl}
-                  alt={project.title || "Project Image"}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-3 text-white">
-                  <h3 className="font-semibold text-base sm:text-lg text-white">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-200">
-                    {project.category}
-                    {project.subCategory ? ` - ${project.subCategory}` : ""}
-                  </p>
+            <article key={project._id} className={styles.card}>
+              <Link href={`/projects/${project.slug}`} className={styles.cardLink} aria-label={`View project: ${project.title}`}>
+                <div className={styles.image}>
+                  <Image src={imageUrl} alt={image?.alt || project.title || "Project preview"}
+                    fill unoptimized sizes="(max-width: 767px) 100vw, 45vw"
+                    onError={event => { event.currentTarget.src = "/placeholder.svg" }} />
                 </div>
-              </div>
-
-              {/* 📄 Content Section */}
-              <div className="p-4 sm:p-5">
-                <p className="text-gray-600 text-sm mb-3 line-clamp-3">
-                  {project.description}
-                </p>
-
-                {/* 🧠 Skills */}
-                {project.skills?.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {project.skills.slice(0, 5).map((skill, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-1 bg-amber-100 text-[#b45309] text-xs font-medium rounded-full"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                <div className={styles.caption}>
+                  <h3 className={styles.title}>{project.title}{year && <span className={styles.year}> - {year}</span>}</h3>
+                  <div className={styles.cardTags}>
+                    {tags.map(tag => <span key={tag}>{tag}</span>)}
                   </div>
-                )}
-
-                {/* 🔗 Links + Status */}
-                <div className="flex items-center justify-between">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    aria-label={`View Project: ${project.title}`}
-                    className="flex items-center text-sm font-semibold text-[#d88f07] hover:text-[#b45309] transition-colors duration-300"
-                  >
-                    <span>View Project</span>
-                    <ChevronRight className="ml-1 h-4 w-4 transition-transform duration-300" aria-hidden="true" />
-                  </Link>
-
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      project.status === "Completed"
-                        ? "bg-green-100 text-green-700"
-                        : project.status === "Progress"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : project.status === "Holding"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    {project.status}
-                  </span>
                 </div>
-              </div>
-            </motion.div>
-          );
+              </Link>
+            </article>
+          )
         })}
       </div>
-
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-8 space-x-2">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-4 py-2 rounded font-medium ${
-                currentPage === page
-                  ? "bg-[#f2ad08] text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } transition-colors`}
-              aria-label={`Page ${page}`}
-              aria-current={currentPage === page ? "page" : undefined}
-            >
-              {page}
-            </button>
+      {pages > 1 && (
+        <nav className={styles.pagination} aria-label="Project pages">
+          {Array.from({ length: pages }, (_, index) => index + 1).map(number => (
+            <button key={number} type="button" className={styles.page} onClick={() => changePage(number)}
+              aria-label={`Page ${number}`} aria-current={page === number ? "page" : undefined}>{number}</button>
           ))}
-        </div>
+        </nav>
       )}
-    </section>
-  );
+    </>
+  )
 }

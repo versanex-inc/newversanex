@@ -6,10 +6,12 @@ import LazySection from "@/components/LazySection";
 const Services = dynamic(() => import("@/components/services"));
 const About = dynamic(() => import("@/components/about"));
 const Portfolio = dynamic(() => import("@/components/portfolio"));
-const Advantages = dynamic(() => import("@/components/advantages"));
+// const Advantages = dynamic(() => import("@/components/advantages"));
+const BrandsSection = dynamic(() => import("@/components/brands-we-work-with"));
 const Testimonials = dynamic(() => import("@/components/testimonials"));
 const TechStack = dynamic(() => import("@/components/tech-stack"));
 const Instagram = dynamic(() => import("@/components/instagram"));
+const Process = dynamic(() => import("@/components/Process-Section"));
 // HIDDEN — Our Creative Team section (comment back in to restore)
 // const Team = dynamic(() => import("@/components/team"));
 
@@ -17,33 +19,39 @@ const Contact = dynamic(() => import("@/components/contact"));
 const Footer = dynamic(() => import("@/components/footer"));
 const DynamicPopup = dynamic(() => import("@/components/DynamicPopup"));
 
+import { createPageMetadata, SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo";
+
+export const metadata = createPageMetadata(SITE_TITLE, SITE_DESCRIPTION, "/");
+
 export default function HomePage() {
   return (
     <>
       <Navbar />
       <main id="main" className="flex flex-col">
         <Hero />
-        <About />
-
-        <LazySection minHeight="500px">
-          <Services />
-        </LazySection>
+        {/* <About /> */}
 
         <LazySection minHeight="500px">
           <Portfolio />
         </LazySection>
 
+        <Services />
+
         <LazySection minHeight="400px">
-          <Advantages />
+          <Process />
         </LazySection>
 
         <LazySection minHeight="400px">
+          <BrandsSection />
+        </LazySection>
+
+        {/* <LazySection minHeight="400px">
           <Testimonials />
         </LazySection>
 
         <LazySection minHeight="400px">
           <TechStack />
-        </LazySection>
+        </LazySection> */}
 
         <LazySection minHeight="400px">
           <Instagram />
@@ -64,9 +72,7 @@ export default function HomePage() {
         <DynamicPopup />
       </LazySection>
 
-      <LazySection minHeight="300px">
-        <Footer />
-      </LazySection>
+      <Footer />
     </>
   );
 }

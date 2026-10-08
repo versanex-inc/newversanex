@@ -118,7 +118,7 @@ export default function Footer() {
               {[
                 ["/about", "About Us"],
                 ["/services", "Our Services"],
-                ["/projects", "Case Studies"],
+                ["/projects", "Our Projects"],
                 // HIDDEN — comment back in to restore Our Team link:
                 // ["/about/ourteam", "Our Team"],
                 ["/contact", "Contact"],
@@ -213,29 +213,39 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <hr className="my-10 border-gray-800" />
+        <hr className="my-10 border-gray-800 relative z-10" />
 
         {/* Bottom section */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500 relative z-10">
           <p>
             © {new Date().getFullYear()}{" "}
             <span className="text-gray-300 font-semibold">VersaNex</span>. All
             rights reserved.
           </p>
-          <p>
-            <span className="font-medium text-gray-300">VersaNex</span>
-          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-2 hover:text-white transition-colors"
+          >
+            Back To Top <span className="border border-current rounded-full px-1.5 py-0.5 text-[10px]">↑</span>
+          </button>
         </div>
+      </div>
+
+      {/* Giant Footer Text */}
+      <div className="w-full flex justify-center items-end pointer-events-none select-none overflow-hidden relative z-0 mt-8">
+        <h1 className="text-[17vw] font-black leading-[0.7] tracking-tight uppercase translate-y-[22%] bg-gradient-to-b from-gray-600/60 to-black bg-clip-text text-transparent">
+          VersaNex
+        </h1>
       </div>
 
       {/* Decorative background blur */}
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-0 w-60 h-60 bg-[#f2ad08]/10 rounded-full blur-3xl"
+        className="absolute bottom-0 left-0 w-60 h-60 bg-[#f2ad08]/10 rounded-full blur-3xl z-0"
       />
       <div
         aria-hidden="true"
-        className="absolute bottom-0 right-0 w-72 h-72 bg-[#f2ad08]/10 rounded-full blur-3xl"
+        className="absolute bottom-0 right-0 w-72 h-72 bg-[#f2ad08]/10 rounded-full blur-3xl z-0"
       />
     </footer>
   );

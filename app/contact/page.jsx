@@ -1,311 +1,172 @@
-"use client";
-import { useState } from "react";
-import dynamic from "next/dynamic";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { FiPhone, FiMail, FiMapPin, FiSend, FiArrowRight } from "react-icons/fi";
-import Link from "next/link";
-import Navbar from "@/components/navbar";
+"use client"
 
-// Lazy-load Footer for faster FCP
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false });
+import { useEffect, useRef, useState } from "react"
+import Link from "next/link"
+import { motion, useReducedMotion } from "framer-motion"
+import { ArrowDown, ArrowUpRight, Check, LoaderCircle } from "lucide-react"
+import { services } from "@/data/services"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
+import styles from "./contact.module.css"
+
+const emptyForm = { name: "", email: "", service: "", description: "" }
+const ease = [0.22, 1, 0.36, 1]
 
 export default function ContactUs() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    service: "",
-    description: "",
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [formData, setFormData] = useState(emptyForm)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState("")
+  const inFlight = useRef(false)
+  const successRef = useRef(null)
+  const reducedMotion = useReducedMotion()
+  const reveal = {
+    initial: reducedMotion ? false : { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.15 },
+    transition: { duration: reducedMotion ? 0 : 0.8, ease },
+  }
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  useEffect(() => {
+    if (submitted) successRef.current?.focus()
+  }, [submitted])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
+  function handleChange(event) {
+    const { name, value } = event.target
+    setFormData(previous => ({ ...previous, [name]: value }))
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    if (inFlight.current) return
+    const payload = Object.fromEntries(Object.entries(formData).map(([key, value]) => [key, value.trim()]))
+    if (!payload.name || !payload.email || !payload.service || !payload.description) {
+      setError("Please complete your name, email, service, and project details.")
+      return
+    }
+    inFlight.current = true
+    setSubmitting(true)
+    setError("")
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        setIsSubmitted(true);
-        setTimeout(() => {
-          setIsSubmitted(false);
-          setFormData({ name: "", email: "", service: "", description: "" });
-        }, 3000);
-      } else {
-        alert("Failed to send message. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred. Please try again later.");
+        body: JSON.stringify(payload),
+      })
+      const result = await response.json()
+      if (!response.ok || !result.success) throw new Error("We couldn't send your enquiry. Please try again, or email us directly.")
+      setSubmitted(true)
+    } catch {
+      setError("We couldn't send your enquiry. Please try again, or email contact@versanex.site.")
     } finally {
-      setSubmitting(false);
+      inFlight.current = false
+      setSubmitting(false)
     }
-  };
+  }
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-  };
-
-  const services = [
-    "Web Apps",
-    "Shopify Stores",
-    "WordPress Websites",
-    "Digital Marketing",
-    "Video Editing",
-    "Graphic Designing",
-    "Software Quality Assurance",
-    "Content Writing",
-  ];
+  function startAgain() {
+    setFormData(emptyForm)
+    setError("")
+    setSubmitted(false)
+  }
 
   return (
     <>
       <Navbar />
-      <section
-        id="contact"
-        className="relative bg-gray-50 py-16 sm:py-20 px-4 sm:px-6 overflow-hidden"
-      >
-        {/* Soft gradient background for visual depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f2ad08]/10 to-[#d88f07]/10" />
+      <main className={styles.page}>
+        <section className={styles.hero} aria-labelledby="contact-heading">
+          <motion.p {...reveal} className={styles.eyebrow}>Let&apos;s talk</motion.p>
+          <motion.h1 id="contact-heading" aria-label="Good things start with a conversation." className={styles.heading}
+            initial={reducedMotion ? false : "hidden"} animate="visible">
+            {["Good things start", "with a conversation."].map((line, index) => (
+              <span key={line} className={styles.headingMask}>
+                <motion.span className={index ? styles.muted : undefined}
+                  variants={{ hidden: { y: "105%" }, visible: { y: 0 } }}
+                  transition={{ duration: reducedMotion ? 0 : 1, delay: reducedMotion ? 0 : index * 0.14, ease }}>{line}</motion.span>
+              </span>
+            ))}
+          </motion.h1>
+          <motion.div {...reveal} className={styles.heroBottom}>
+            <p>Have an idea, a challenge, or a project ready to grow?<br className={styles.desktopBreak} /> We&apos;d love to hear what you have in mind.</p>
+            <a href="#contact-form" className={styles.scrollLink} aria-label="Go to the project enquiry form"><ArrowDown size={23} strokeWidth={1.5} aria-hidden="true" /></a>
+          </motion.div>
+        </section>
 
-        <motion.div
-          className="mx-auto max-w-7xl relative z-10"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {/* Header */}
-          <div className="text-center mb-14">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-              Get in Touch
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-              We’d love to hear from you! Whether you have a project idea, need
-              support, or just want to say hello, reach out to us today.
-            </p>
-          </div>
+        <section id="contact-form" className={styles.contactSection} aria-labelledby="enquiry-heading">
+          <div className={styles.contactGrid}>
+            <motion.aside {...reveal} className={styles.info}>
+              <p className={styles.eyebrow}>A good place to begin</p>
+              <h2>Big idea.<br /><span>Small first step.</span></h2>
+              <p className={styles.infoIntro}>Tell us where you want to go. We&apos;ll help you figure out how to get there.</p>
+              <dl className={styles.contactDetails}>
+                <div><dt>Email us</dt><dd><a href="mailto:contact@versanex.site">contact@versanex.site <ArrowUpRight size={16} aria-hidden="true" /></a></dd></div>
+                <div><dt>Give us a call</dt><dd><a href="tel:+923457707337">+92 345 7707337 <ArrowUpRight size={16} aria-hidden="true" /></a></dd></div>
+                <div><dt>Based in</dt><dd>Faisalabad, Pakistan</dd></div>
+              </dl>
+              <div className={styles.socials}>
+                <a href="https://www.linkedin.com/company/versanex" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={13} aria-hidden="true" /></a>
+                <a href="https://www.instagram.com/versanexinc" target="_blank" rel="noopener noreferrer">Instagram <ArrowUpRight size={13} aria-hidden="true" /></a>
+              </div>
+            </motion.aside>
 
-          {/* Contact Form + Info Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
-            {/* Contact Form */}
-            <motion.div
-              className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 lg:p-10"
-              variants={containerVariants}
-            >
-              <AnimatePresence>
-                {!isSubmitted ? (
-                  <motion.form
-                    onSubmit={handleSubmit}
-                    className="space-y-5 sm:space-y-6"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0, transition: { duration: 0.3 } }}
-                  >
-                    {/* Name */}
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-semibold text-gray-700"
-                      >
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="mt-2 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-[#e59e00] transition-all duration-300"
-                        placeholder="Your Name"
-                        required
-                        disabled={submitting}
-                      />
+            <motion.div {...reveal} className={styles.formArea}>
+              {submitted ? (
+                <motion.div ref={successRef} tabIndex={-1} role="status" className={styles.success}
+                  initial={reducedMotion ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: reducedMotion ? 0 : 0.6, ease }}>
+                  <span className={styles.successIcon}><Check size={28} strokeWidth={1.5} aria-hidden="true" /></span>
+                  <p className={styles.eyebrow}>Enquiry received</p>
+                  <h2 id="enquiry-heading">That&apos;s the<br />first step taken.</h2>
+                  <p>Thanks for sharing your idea. Our team will review your enquiry and get back to you at the email you provided.</p>
+                  <button type="button" onClick={startAgain} className={styles.submit}>Send another enquiry <ArrowUpRight size={18} aria-hidden="true" /></button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} aria-busy={submitting} aria-labelledby="enquiry-heading">
+                  <div className={styles.formHeader}><h2 id="enquiry-heading">Tell us about your project.</h2><span>01 / Start a conversation</span></div>
+                  <fieldset disabled={submitting} className={styles.formFields}>
+                    <legend className={styles.screenReaderText}>Your project enquiry</legend>
+                    <div className={styles.inputGrid}>
+                      <div className={styles.field}><label htmlFor="contact-name">Your name</label><input id="contact-name" name="name" autoComplete="name" placeholder="Alex Morgan" value={formData.name} onChange={handleChange} required maxLength={120} /></div>
+                      <div className={styles.field}><label htmlFor="contact-email">Email address</label><input id="contact-email" type="email" name="email" autoComplete="email" placeholder="alex@company.com" value={formData.email} onChange={handleChange} required maxLength={254} /></div>
                     </div>
-
-                    {/* Email */}
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-semibold text-gray-700"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="mt-2 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-[#e59e00] transition-all duration-300"
-                        placeholder="Your Email"
-                        required
-                        disabled={submitting}
-                      />
-                    </div>
-
-                    {/* Service */}
-                    <div>
-                      <label
-                        htmlFor="service"
-                        className="block text-sm font-semibold text-gray-700"
-                      >
-                        Select Service
-                      </label>
-                      <select
-                        id="service"
-                        name="service"
-                        value={formData.service}
-                        onChange={handleChange}
-                        className="mt-2 w-full rounded-lg border border-gray-300 p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#e59e00] transition-all duration-300"
-                        required
-                        disabled={submitting}
-                      >
-                        <option value="">Choose a service</option>
-                        {services.map((s) => (
-                          <option key={s} value={s}>
-                            {s}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Description */}
-                    <div>
-                      <label
-                        htmlFor="description"
-                        className="block text-sm font-semibold text-gray-700"
-                      >
-                        Project Description
-                      </label>
-                      <textarea
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        rows="5"
-                        className="mt-2 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-[#e59e00] transition-all duration-300"
-                        placeholder="Describe your project..."
-                        required
-                        disabled={submitting}
-                      />
-                    </div>
-
-                    {/* Button */}
-                    <button
-                      type="submit"
-                      className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[#f2ad08] text-white font-semibold rounded-full shadow-lg hover:bg-[#d88f07] hover:shadow-xl transition-all duration-300 focus:ring-4 focus:ring-[#f2ad08]/40 focus:outline-none"
-                      disabled={submitting}
-                    >
-                      {submitting ? (
-                        <>
-                          Sending <span className="animate-pulse">...</span>
-                        </>
-                      ) : (
-                        <>
-                          Send Message <FiSend className="h-5 w-5" />
-                        </>
-                      )}
-                    </button>
-                  </motion.form>
-                ) : (
-                  <motion.div
-                    className="text-center py-10"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h3 className="text-2xl font-semibold text-gray-900">
-                      Thank You!
-                    </h3>
-                    <p className="mt-4 text-gray-600">
-                      Your message has been sent successfully. We’ll get back to
-                      you soon!
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-
-            {/* Info + Image */}
-            <motion.div className="space-y-8 lg:space-y-10" variants={containerVariants}>
-              {/* Info Box */}
-              <div className="bg-white/95 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                  Contact Information
-                </h3>
-                <div className="space-y-6">
-                  {[
-                    {
-                      icon: <FiPhone className="h-6 w-6 text-[#f2ad08]" />,
-                      title: "Phone",
-                      text: "+92 345 7707337",
-                      link: "+923457707337",
-                    },
-                    {
-                      icon: <FiMail className="h-6 w-6 text-[#f2ad08]" />,
-                      title: "Email",
-                      text: "contact@versanex.site",
-                      link: "mailto:contact@versanex.site",
-                    },
-                    {
-                      icon: <FiMapPin className="h-6 w-6 text-[#f2ad08]" />,
-                      title: "Address",
-                      text: "Faisalabad Pakistan",
-                      link: null,
-                    },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <div className="p-3 bg-[#f2ad08]/10 rounded-lg">{item.icon}</div>
-                      <div>
-                        <p className="font-semibold text-gray-900">{item.title}</p>
-                        {item.link ? (
-                          <a
-                            href={item.link}
-                            className="text-gray-600 hover:text-[#f2ad08] transition-colors duration-300"
-                          >
-                            {item.text}
-                          </a>
-                        ) : (
-                          <p className="text-gray-600">{item.text}</p>
-                        )}
+                    <fieldset className={styles.services}>
+                      <legend>What can we help you with?</legend>
+                      <div className={styles.serviceOptions}>
+                        {services.map(service => <label key={service.slug} className={styles.serviceOption}>
+                          <input type="radio" name="service" value={service.title} checked={formData.service === service.title} onChange={handleChange} required />
+                          <span>{service.title}</span>
+                        </label>)}
                       </div>
+                    </fieldset>
+                    <div className={styles.field}><label htmlFor="contact-description">A little about your project</label><textarea id="contact-description" name="description" rows={4} placeholder="Your idea, your goals, or the challenge you'd like to solve..." value={formData.description} onChange={handleChange} required maxLength={5000} /></div>
+                    {error && <p role="alert" className={styles.error}>{error}</p>}
+                    <div className={styles.formFooter}>
+                      <p>Your details are handled according to our <Link href="/privacy-policy">privacy policy</Link>.</p>
+                      <button type="submit" className={styles.submit} disabled={submitting}>{submitting ? <>Sending... <LoaderCircle className={styles.spinner} size={18} aria-hidden="true" /></> : <>Send enquiry <ArrowUpRight size={18} aria-hidden="true" /></>}</button>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Image Section */}
-              <div className="relative rounded-3xl overflow-hidden shadow-xl">
-                <Image
-                  src="https://res.cloudinary.com/dbbbve4y4/image/upload/v1761777638/WhatsApp_Image_2025-10-22_at_08.18.36_c8bf8d8e_bc0n1k.jpg"
-                  width={600}
-                  height={400}
-                  alt="Contact Us"
-                  className="w-full h-64 object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <Link
-                  href="/about"
-                  className="absolute bottom-4 right-4 flex items-center gap-2 text-white font-semibold hover:text-[#f2ad08] transition-colors duration-300"
-                >
-                  Learn More About Us <FiArrowRight className="h-5 w-5" />
-                </Link>
-              </div>
+                  </fieldset>
+                </form>
+              )}
             </motion.div>
           </div>
-        </motion.div>
-      </section>
+        </section>
+
+        <section className={styles.nextSteps} aria-labelledby="next-heading">
+          <motion.div {...reveal} className={styles.nextHeader}><p className={styles.eyebrow}>What happens next</p><h2 id="next-heading">A conversation.<br /><span>A clear way forward.</span></h2></motion.div>
+          <ol className={styles.steps}>
+            {[
+              { title: "We get to know your idea.", text: "We review your enquiry and learn about your goals, priorities, and the people you're building for." },
+              { title: "We find the right approach.", text: "Together, we explore the scope, the right services, and what your project needs to succeed." },
+              { title: "We plan the next step.", text: "You get a clear direction for moving forward, with the details discussed before work begins." },
+            ].map((step, index) => <motion.li {...reveal} key={step.title}><span className={styles.stepNumber}>{String(index + 1).padStart(2, "0")}</span><h3>{step.title}</h3><p>{step.text}</p></motion.li>)}
+          </ol>
+        </section>
+
+        <section className={styles.quickContact}>
+          <motion.div {...reveal}><p className={styles.eyebrow}>Keep it simple</p><h2>Prefer a quick hello?</h2><p>Start a conversation on WhatsApp. We&apos;re happy to hear from you.</p><a href="https://wa.me/923457707337" target="_blank" rel="noopener noreferrer" className={styles.whatsapp}>Say hello <ArrowUpRight size={19} aria-hidden="true" /></a></motion.div>
+        </section>
+      </main>
       <Footer />
     </>
-  );
+  )
 }

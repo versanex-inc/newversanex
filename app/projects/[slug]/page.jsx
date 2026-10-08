@@ -1,80 +1,27 @@
 
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import LoadingAnimation from "../../loading";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import ProjectHeader from "@/components/projects/SingleProject/ProjectHeader";
-import ProjectTabs from "@/components/projects/SingleProject/tabs/ProjectTabs";
-import OverviewTab from "@/components/projects/SingleProject/tabs/OverviewTab";
-import FeaturesTab from "@/components/projects/SingleProject/tabs/FeaturesTab";
-import GalleryTab from "@/components/projects/SingleProject/tabs/GalleryTab";
-import ReviewsTab from "@/components/projects/SingleProject/tabs/ReviewsTab";
+import ProjectAbout from "@/components/projects/SingleProject/ProjectAbout";
+import ProjectStory from "@/components/projects/SingleProject/ProjectStory";
+import ProjectDetails from "@/components/projects/SingleProject/ProjectDetails";
 import RelatedProjects from "@/components/projects/SingleProject/RelatedProjects";
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const wrapperRef = useRef(null);
-  const prefersReducedMotion = useRef(false);
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState("overview");
   const [reviews, setReviews] = useState([]);
   const [relatedProjects, setRelatedProjects] = useState([]);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [zoom, setZoom] = useState(1);
 
-  useEffect(() => {
-    prefersReducedMotion.current =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }, []);
-
-  useGSAP(() => {
-    if (prefersReducedMotion.current || !wrapperRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".pd-card", {
-        y: 24,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        stagger: 0.1
-      });
-
-      const targets = gsap.utils.toArray(".pd-media");
-      targets.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      });
-    }, wrapperRef);
-    return () => ctx.revert();
-  }, []);
-
-// ✅ Track Views (IP + Cookie + LocalStorage protected)
 useEffect(() => {
   if (!project?._id) return;
 
@@ -107,6 +54,9 @@ useEffect(() => {
   useEffect(() => {
     const fetchProject = async () => {
       setLoading(true);
+      setError(null);
+      setReviews([]);
+      setRelatedProjects([]);
       try {
         const response = await fetch(`/api/projects/${params.slug}`);
         const result = await response.json();
@@ -145,7 +95,7 @@ useEffect(() => {
         );
         const relatedData = await relatedResponse.json();
         if (relatedData.success)
-          setRelatedProjects(relatedData.data || []);
+          setRelatedProjects((relatedData.data || []).filter(item => item.slug !== params.slug && item.category === projectData.category).slice(0, 3));
       } catch (err) {
         console.error("Error fetching project:", err);
         setError("Error fetching project: " + err.message);
@@ -178,7 +128,7 @@ useEffect(() => {
           {error || "Project not found"}
         </h1>
         <button
-          onClick={() => router.push("/portfolio")}
+          onClick={() => router.push("/projects")}
           className="px-4 py-2 text-white rounded-lg transition-all text-base sm:text-lg"
           style={{
             background: "linear-gradient(90deg, #d88f07, #e2a63c)",
@@ -191,119 +141,18 @@ useEffect(() => {
     );
   }
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const averageRating = reviews.length
-    ? (
-        reviews.reduce((sum, review) => sum + review.rating, 0) /
-        reviews.length
-      ).toFixed(1)
-    : 0;
-
   return (
     <>
       <Navbar />
-      <style jsx>{`
-        @media (max-width: 799px) {
-          .forcesmallh1 {
-            font-size: 1.5rem;
-          }
-          .forcesmallp {
-            font-size: 0.8rem;
-          }
-        }
-        @media (max-width: 640px) {
-          .forcesmallh1 {
-            font-size: 1.2rem;
-          }
-          .forcesmallp {
-            font-size: 0.7rem;
-          }
-          .forcesmallweb {
-            font-size: 0.6rem;
-          }
-        }
-      `}</style>
-
-      <div ref={wrapperRef}>
-        <div className="max-w-7xl mx-auto px-6 py-10 sm:py-2 sm:px-5">
-          <div className="bg-white rounded-2xl shadow-xl mt-5 overflow-hidden">
-            {/* 🧩 Header */}
-            <ProjectHeader
-              project={project}
-              averageRating={averageRating}
-              reviews={reviews}
-            />
-
-            {/* 🧠 Tabs */}
-            <div className="p-4 sm:p-6 md:p-8">
-              <ProjectTabs
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
-
-              {activeTab === "overview" && (
-                <OverviewTab
-                  project={project}
-                  fadeIn={fadeIn}
-                  staggerContainer={staggerContainer}
-                  motion={motion}
-                />
-              )}
-
-              {activeTab === "features" && (
-                <FeaturesTab
-                  project={project}
-                  fadeIn={fadeIn}
-                  staggerContainer={staggerContainer}
-                  motion={motion}
-                />
-              )}
-
-              {activeTab === "gallery" && (
-                <GalleryTab
-                  project={project}
-                  refreshKey={refreshKey}
-                  setRefreshKey={setRefreshKey}
-                  fadeIn={fadeIn}
-                  staggerContainer={staggerContainer}
-                  motion={motion}
-                  selectedImage={selectedImage}
-                  setSelectedImage={setSelectedImage}
-                  zoom={zoom}
-                  setZoom={setZoom}
-                />
-              )}
-
-              {activeTab === "reviews" && (
-                <ReviewsTab
-                  reviews={reviews}
-                  fadeIn={fadeIn}
-                  staggerContainer={staggerContainer}
-                  motion={motion}
-                />
-              )}
-            </div>
-          </div>
-
-          {/* 🧩 Related Projects */}
-          <RelatedProjects
-            relatedProjects={relatedProjects}
-            router={router}
-          />
+      <main className="bg-[#f5f5f5]">
+        <ProjectHeader project={project} />
+        <div id="project-details" className="scroll-mt-6"><ProjectAbout project={project} /></div>
+        <ProjectStory project={project} />
+        <ProjectDetails key={project.slug} project={project} reviews={reviews} />
+        <div className="max-w-[1800px] mx-auto px-5 pb-16 md:px-[5%]">
+          <RelatedProjects relatedProjects={relatedProjects} />
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>

@@ -1,65 +1,114 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
+import { ArrowDown, ArrowLeft, ArrowUpRight } from "lucide-react"
+import styles from "./project-hero.module.css"
+
+const categories = {
+  "website-developing": "Web Design & Development",
+  "mobile-app-development": "Mobile App Development",
+  "ui-ux": "UX/UI Design",
+  "graphic-designing": "Graphic Design",
+}
 
 export default function ProjectHeader({ project }) {
-  const rawUrl = project.images?.[0]?.url;
-  const initialSrc = rawUrl && typeof rawUrl === 'string' && rawUrl.trim() !== ''
-    ? rawUrl
-    : "/placeholder.svg";
+  const source = project.images?.[0]?.url
+  const [imgSrc, setImgSrc] = useState(source || "/placeholder.svg")
+  const [expanded, setExpanded] = useState(false)
+  const [canExpand, setCanExpand] = useState(false)
+  const descriptionRef = useRef(null)
+  const descriptionId = useId()
+  useEffect(() => { setImgSrc(source || "/placeholder.svg") }, [source])
+  const category = categories[project.category] || project.category?.replace(/-/g, " ") || "Digital experience"
+  const date = project.createdAt ? new Date(project.createdAt) : null
+  const year = date && !Number.isNaN(date.getTime()) ? date.getUTCFullYear() : null
+  const liveLink = /^https?:\/\//i.test(project.liveLink || "") ? project.liveLink : null
+  const titleParts = (project.title || "Project").split(/\s+[–—-]\s+/)
+  const name = titleParts[0]
+  const description = (project.description || titleParts.slice(1).join(" — ") || "").trim()
 
-  const [imgSrc, setImgSrc] = useState(initialSrc)
-  const [hasError, setHasError] = useState(false)
+  useEffect(() => { setExpanded(false) }, [description])
 
   useEffect(() => {
-    const nextUrl = project.images?.[0]?.url;
-    setImgSrc(nextUrl && typeof nextUrl === 'string' && nextUrl.trim() !== '' ? nextUrl : "/placeholder.svg")
-    setHasError(false)
-  }, [project.images])
+    const element = descriptionRef.current
+    if (!element || expanded) return
+    let active = true
+    const measure = () => {
+      if (active) setCanExpand(element.scrollHeight > element.clientHeight + 1)
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(element)
+    measure()
+    document.fonts?.ready.then(measure)
+    return () => {
+      active = false
+      observer.disconnect()
+    }
+  }, [description, expanded])
+
+  function explore(event) {
+    event.preventDefault()
+    document.getElementById("project-details")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    })
+  }
 
   return (
-    <>
-      <div className="relative h-48 sm:h-64 md:h-80 w-full bg-gray-100">
-        <Image
-          src={imgSrc}
-          alt={project.title || "Project Image"}
-          fill
-          unoptimized
-          className="object-cover"
-          onError={() => {
-            if (!hasError) {
-              setHasError(true)
-              setImgSrc("/placeholder.svg")
-            }
-          }}
-        />
-
-        {/* Soft gradient overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-
-        <div className="absolute bottom-0 left-0 p-3 sm:p-4 md:p-6 text-white">
-          {/* Category Badge */}
-          <div className="flex items-center gap-1.5 mb-1 sm:mb-2">
-            <span
-              className="px-2 py-1 text-white text-xs sm:text-sm rounded-full forcesmallweb"
-              style={{
-                background: "linear-gradient(90deg, #d88f07, #e2a63c)",
-                boxShadow: "0 2px 6px rgba(216, 143, 7, 0.4)",
-              }}
-            >
-              {project.category} {project.subCategory ? `- ${project.subCategory}` : ""}
-            </span>
-          </div>
-
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 forcesmallh1">
-            {project.title}
-          </h1>
-          <p className="text-white/80 text-xs sm:text-sm max-w-md sm:max-w-xl line-clamp-3 forcesmallp">
-            {project.description || "No description available"}
-          </p>
+    <header className={styles.hero}>
+      <div className={styles.inner}>
+        <div className={styles.topline}>
+          <Link href="/projects" className={styles.back}><ArrowLeft size={15} aria-hidden="true" /> All projects</Link>
+          <span className={styles.eyebrow}>{category}{year ? ` / ${year}` : ""}</span>
         </div>
+        <div className={styles.intro}>
+          <h1 className={styles.title}>{name}</h1>
+          <div className={styles.descriptionRow}>
+            {description && (
+              <div className={styles.descriptionBlock}>
+                <p ref={descriptionRef} id={descriptionId}
+                  className={`${styles.description} ${expanded ? styles.descriptionExpanded : styles.descriptionPreview}`}>
+                  {description}
+                </p>
+                {canExpand && (
+                  <button type="button" className={styles.readMore} aria-expanded={expanded}
+                    aria-controls={descriptionId} onClick={() => setExpanded(value => !value)}>
+                    {!expanded && <span aria-hidden="true">...</span>}
+                    {expanded ? "Read less" : "Read more"}
+                  </button>
+                )}
+              </div>
+            )}
+            <div className={styles.actions}>
+              {liveLink && <a href={liveLink} target="_blank" rel="noopener noreferrer" className={styles.visit}>Visit project <ArrowUpRight size={18} aria-hidden="true" /></a>}
+              <a href="#project-details" onClick={explore} className={styles.explore} aria-label="Explore project details"><ArrowDown size={21} aria-hidden="true" /></a>
+            </div>
+          </div>
+        </div>
+        <div className={styles.visualContainer}>
+          {project.images && project.images.length > 0 ? (
+            project.images.slice(0, 3).map((img, i) => (
+              <figure key={i} className={styles.visual} style={{ top: `calc(80px + ${i * 16}px)`, zIndex: i + 1 }}>
+                <Image src={img.url} alt={img.alt || project.title || "Project preview"}
+                  fill priority={i === 0} unoptimized sizes="90vw" className={styles.cover} />
+              </figure>
+            ))
+          ) : (
+            <figure className={styles.visual} style={{ top: '120px' }}>
+              <Image src={imgSrc} alt={project.title || "Project preview"}
+                fill priority unoptimized sizes="90vw" className={styles.cover}
+                onError={() => { if (imgSrc !== "/placeholder.svg") setImgSrc("/placeholder.svg") }} />
+            </figure>
+          )}
+        </div>
+        <dl className={styles.facts}>
+          <div><dt>Discipline</dt><dd>{project.subCategory || category}</dd></div>
+          <div><dt>Created by</dt><dd>{project.creatorName || "VersaNex"}</dd></div>
+          {year && <div><dt>Year</dt><dd>{year}</dd></div>}
+          {project.status && <div><dt>Status</dt><dd>{project.status}</dd></div>}
+        </dl>
       </div>
-    </>
+    </header>
   )
 }

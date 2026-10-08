@@ -1,7 +1,11 @@
 "use client"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import SectionHeading from "./section-heading"
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
+
+const fieldClass = "w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-[#F8F9FA] dark:bg-[#090A0C] px-4 py-3 text-sm text-[#1b2b40] dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#f2ad08] focus:border-transparent transition-colors"
+const labelClass = "block text-sm font-medium text-[#1b2b40] dark:text-slate-200 mb-2"
 
 export default function Contact() {
   const [submitting, setSubmitting] = useState(false)
@@ -57,105 +61,66 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-20 md:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden"
+      aria-labelledby="home-contact-heading"
+      className="scroll-mt-24 py-20 sm:py-28 bg-[#F8F9FA] dark:bg-[#090A0C] text-[#1b2b40] dark:text-slate-100 antialiased transition-colors duration-300"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#f2ad08]/5 to-[#d88f07]/5 opacity-50" />
-      <div className="absolute top-20 left-10 w-64 h-64 bg-[#f2ad08]/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-72 h-72 bg-[#d88f07]/10 rounded-full blur-3xl animate-pulse delay-1000" />
-
-      <div className="mx-auto max-w-7xl px-8 relative z-10">
-        <SectionHeading
-          eyebrow={
-            <span className="font-semibold text-[#f2ad08] inline-flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#f2ad08] rounded-full animate-pulse"></span>
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <div className="mb-12 sm:mb-14 border-b border-slate-200 dark:border-neutral-800 pb-8">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="h-2 w-2 rounded-full bg-[#f2ad08]" />
+            <span className="text-[11px] font-mono font-medium uppercase tracking-widest text-[#556377] dark:text-slate-400">
               Ready to Collaborate?
             </span>
-          }
-          title="Let’s Create Your Vision Together!"
-        />
+          </div>
+          <h2 id="home-contact-heading" className="text-4xl sm:text-6xl font-normal tracking-tight leading-[1.1] max-w-4xl">
+            Let&rsquo;s Create Your Vision Together!
+          </h2>
+        </div>
 
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left text section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center lg:text-left"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+            className="lg:pt-6"
           >
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            <h3 className="text-2xl sm:text-3xl font-normal tracking-tight mb-5 max-w-sm">
               Take the First Step with VersaNex
             </h3>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Hi, we’re here to turn your ideas into reality! Share your project details, and let’s start
-              building something extraordinary together. Your success is our priority—contact us today!
+            <p className="text-sm sm:text-base text-[#556377] dark:text-slate-400 leading-relaxed max-w-md mb-8">
+              Share your project details, goals, and challenges. We&rsquo;ll help you turn your ideas into a website, app, or software built for your business.
             </p>
-            <motion.a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#f2ad08] text-white font-semibold rounded-full shadow-lg hover:bg-[#d88f07] hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
+            <a
+              href="#home-contact-form"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 px-6 py-3 text-sm font-medium hover:bg-[#141b26] hover:text-white dark:hover:bg-white dark:hover:text-[#141b26] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f2ad08]"
             >
-              Get Started Now <span className="animate-pulse">→</span>
-            </motion.a>
+              Get Started Now <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
           </motion.div>
 
-          {/* Contact form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bg-white/95 backdrop-blur-md rounded-3xl border border-gray-100 shadow-xl p-8 md:p-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="min-w-0 rounded-2xl border border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0f1115] p-6 sm:p-8 lg:p-10 shadow-sm"
           >
-            <form onSubmit={onSubmit} className="space-y-6">
+            <form id="home-contact-form" onSubmit={onSubmit} className="scroll-mt-28 space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
-                <div className="relative">
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Name
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#f2ad08] transition-all placeholder:text-gray-400"
-                    placeholder="Enter your name"
-                  />
-                  <div className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#f2ad08]/50">✍️</div>
+                <div>
+                  <label htmlFor="name" className={labelClass}>Your Name</label>
+                  <input id="name" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required className={fieldClass} placeholder="Enter your name" />
                 </div>
-
-                <div className="relative">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Email
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#f2ad08] transition-all placeholder:text-gray-400"
-                    placeholder="your@email.com"
-                  />
-                  <div className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#f2ad08]/50">✉️</div>
+                <div>
+                  <label htmlFor="email" className={labelClass}>Your Email</label>
+                  <input id="email" name="email" type="email" autoComplete="email" value={formData.email} onChange={handleChange} required className={fieldClass} placeholder="your@email.com" />
                 </div>
               </div>
 
-              <div className="relative">
-                <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                  Select a Service
-                </label>
-                <select
-                  id="service"
-                  name="service"
-                  value={formData.service}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-lg border border-gray-200 px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#f2ad08] transition-all"
-                >
+              <div>
+                <label htmlFor="service" className={labelClass}>Select a Service</label>
+                <select id="service" name="service" value={formData.service} onChange={handleChange} required className={fieldClass}>
                   <option value="">-- Choose a Service --</option>
                   <option value="Web Apps">Web Apps</option>
                   <option value="Shopify Stores">Shopify Stores</option>
@@ -166,56 +131,24 @@ export default function Contact() {
                   <option value="Software Quality Assurance">Software Quality Assurance</option>
                   <option value="Content Writing">Content Writing</option>
                 </select>
-                <div className="absolute top-3 right-3 text-[#f2ad08]/50">⚙️</div>
               </div>
 
-              <div className="relative">
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                  Your Project Idea
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows={5}
-                  required
-                  className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#f2ad08] transition-all resize-none placeholder:text-gray-400"
-                  placeholder="Describe your project or goals…"
-                />
-                <div className="absolute top-3 right-3 text-[#f2ad08]/50">💡</div>
+              <div>
+                <label htmlFor="description" className={labelClass}>Your Project Idea</label>
+                <textarea id="description" name="description" value={formData.description} onChange={handleChange} rows={5} required className={fieldClass + " resize-y min-h-32"} placeholder="Describe your project or goals..." />
               </div>
 
               <div className="flex items-start gap-3">
-                <input
-                  id="consent"
-                  type="checkbox"
-                  checked={consentChecked}
-                  onChange={(e) => setConsentChecked(e.target.checked)}
-                  className="mt-1 h-4 w-4 text-[#f2ad08] border-gray-300 rounded focus:ring-[#f2ad08]"
-                />
-                <label htmlFor="consent" className="text-sm text-gray-600 leading-relaxed">
-                  I agree to the processing of my personal data as per our privacy policy.
+                <input id="consent" type="checkbox" checked={consentChecked} onChange={(e) => setConsentChecked(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[#f2ad08] rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f2ad08]" />
+                <label htmlFor="consent" className="text-xs sm:text-sm text-[#556377] dark:text-slate-400 leading-relaxed">
+                  I agree to the processing of my personal data as per our <Link href="/privacy-policy" className="underline underline-offset-2 hover:text-[#1b2b40] dark:hover:text-white">privacy policy</Link>.
                 </label>
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(242, 173, 8, 0.3)" }}
-                whileTap={{ scale: 0.98 }}
-                type="submit"
-                disabled={submitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#f2ad08] to-[#d88f07] text-white font-semibold rounded-full shadow-md transition-all duration-300 disabled:opacity-70"
-              >
-                {submitting ? (
-                  <>
-                    Sending <span className="animate-pulse">...</span>
-                  </>
-                ) : (
-                  <>
-                    Send Your Vision <span aria-hidden="true">→</span>
-                  </>
-                )}
-              </motion.button>
+              <button type="submit" disabled={submitting} className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#141b26] text-white text-sm font-medium hover:bg-[#f2ad08] hover:text-[#141b26] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f2ad08] disabled:opacity-70 disabled:cursor-wait">
+                {submitting ? "Sending..." : "Send Your Vision"}
+                {!submitting && <ArrowUpRight className="h-4 w-4" aria-hidden="true" />}
+              </button>
             </form>
           </motion.div>
         </div>

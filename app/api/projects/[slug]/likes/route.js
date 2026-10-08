@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 
 // 🚫 POST handler (disabled since login is not implemented)
 export async function POST(request, { params }) {
-  const { slug } = params;
+  const { slug } = await params;
   await dbConnect();
 
   // Optionally verify that the project exists
@@ -27,7 +27,7 @@ export async function POST(request, { params }) {
 
 // 🚫 DELETE handler (disabled since login is not implemented)
 export async function DELETE(request, { params }) {
-  const { slug } = params;
+  const { slug } = await params;
   await dbConnect();
 
   // Optionally verify that the project exists

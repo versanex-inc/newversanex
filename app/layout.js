@@ -6,30 +6,14 @@ import GoogleAnalytics from '@/components/GoogleAnalytics'
 import MetaAnalytics from "@/components/MetaAnalytics";
 import WhatsappButton from '@/components/WhatsappButton'
 import CookieBaner from '@/components/CookieBanner'
+import LenisProvider from '@/components/LenisProvider'
+
+import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo";
 
 export const metadata = {
-  title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
-  description:
-    "VersaNex is a full-service software house providing website development, mobile apps, graphic designing, video editing, digital marketing, content writing, and software quality assurance. We create fast, scalable, and visually engaging digital experiences.",
-  keywords: [
-    "VersaNex",
-    "software house",
-    "web development",
-    "mobile apps",
-    "graphic designing",
-    "video editing",
-    "digital marketing",
-    "content writing",
-    "software quality assurance",
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Framer Motion",
-    "Pakistan software company",
-    "IT solutions",
-    "custom web applications"
-  ],
-
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -57,9 +41,8 @@ export const metadata = {
     ],
   },
   openGraph: {
-    title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
-    description:
-      "We craft high-performance digital solutions — from websites and mobile apps to design, content, and marketing. Fast, scalable, and human-centered.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: "https://www.versanex.site/",
     siteName: "VersaNex",
     locale: "en_US",
@@ -75,9 +58,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "VersaNex — Software House | Web, Mobile & Digital Solutions",
-    description:
-      "Modern website, mobile app, and digital services — including design, marketing, and quality assurance — crafted by VersaNex.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     creator: "@VersaNex",
     images: ["https://www.versanex.site/og-image.jpeg"],
   },
@@ -85,13 +67,24 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head>
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "VersaNex", url: SITE_URL, logo: `${SITE_URL}/logo.png` },
+              { "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: "VersaNex", url: SITE_URL, publisher: { "@id": `${SITE_URL}/#organization` } },
+            ],
+          }).replace(/</g, "\\u003c") }}
+        />
         <MetaAnalytics/>
         <GoogleAnalytics/>
-        <Suspense fallback={null}>{children}</Suspense>
+        {/* <Suspense fallback={null}>{children}</Suspense> */}
+        <Suspense fallback={null}> <LenisProvider>{children}</LenisProvider></Suspense>
         <CookieBaner/>
         <WhatsappButton/>
       </body>

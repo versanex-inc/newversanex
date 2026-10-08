@@ -5,7 +5,7 @@ import Project from "@/lib/model/Projects";
 
 // 🟢 GET all reviews for a project
 export async function GET(req, { params }) {
-  const slug = await params.slug; // Await params.slug to fix warning
+  const { slug } = await params;
 
   await connectDB();
 
@@ -19,7 +19,7 @@ export async function GET(req, { params }) {
 
 // 🟢 POST a new review to the project
 export async function POST(req, { params }) {
-  const slug = await params.slug; // Await params.slug
+  const { slug } = await params;
 
   await connectDB();
 
@@ -48,7 +48,7 @@ export async function POST(req, { params }) {
 
 // 🟡 PUT to update a review (optional)
 export async function PUT(req, { params }) {
-  const slug = await params.slug; // Await params.slug
+  const { slug } = await params;
 
   await connectDB();
   const body = await req.json();
@@ -67,7 +67,7 @@ export async function PUT(req, { params }) {
 
 // 🔴 DELETE a review (optional)
 export async function DELETE(req, { params }) {
-  const slug = await params.slug; // Await params.slug
+  const { slug } = await params;
   const { searchParams } = new URL(req.url);
   const reviewId = searchParams.get("reviewId");
 
